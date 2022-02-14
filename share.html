@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Documents</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/styles/style.css">
+
+</head>
+
+<body>
+    <!-- Start: nav bar-->
+    <navbar>
+        <div class="navbar">
+            <a href="chat.html">Group Chat</a>
+            <a href="users-management.html">Manage Users</a>
+            <a class="active" href="manage-documents.html">Manage Documents</a>
+            <a href="logout.html">Logout</a>
+        </div>
+    </navbar>
+    <!-- End: nav bar-->
+
+    <!-- <div style="padding-top: 30px;padding-left: 15px;padding-right: 15px;"> -->
+    <div class="container-fluid" style="padding: 10px; padding-top: 20px;">
+        <p style="font-size:21px;"><b>Upload Sharing :</b> Sample.txt </p>
+        <table class="table  table-bordered table-striped" style="padding-left: 20px;">
+            <thead>
+                <tr style="background-color: rgb(200,200,200);">
+                    <th>Shared User</th>
+                    <th style='text-align:center'>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sales Report</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
+                            Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Text User</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
+                            Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+        <br>
+        <h4>Add Sharing</h4>
+        <div class="container-fluid add-sharing-container" style="padding:0px;">
+            <div class="row add-sharing-row" >
+                <div class="col-lg-2" style="text-align:right">
+                    Choose User :
+                </div>
+                <div class="col-lg-5" >
+                    <input class="input-file-modal" style="width:80%;"></input>
+                </div>
+                <div class="col-lg-5" style="text-align:left">
+                    <button class="modal-button" style="width:150px;background-color: grey;">Add Share</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Start: Delete Document Modal -->
+    <div class="modal fade" id="deleteDocumentModal" tabindex="-1" aria-labelledby="deleteDocumentModal" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content confirm-modal-content ">
+                <div class="modal-header">
+                    <p class="modal-title" id="deleteDocumentModal">Confirm From Web Page</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p style="text-align:center">
+                        <br>
+                        <img src="./assets/images/question.png" style="width:40px;">
+                        Are you sure ?
+                    </p>
+                </div>
+                <div class="modal-footer confirm-modal-footer">
+                    <button type="button " class="btn btn-secondary modal-button" data-bs-dismiss="modal">Ok</button>
+                    <button type="button " class="btn btn-secondary modal-button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Delete Document Modal -->
+
+</body>
+
+</html>
