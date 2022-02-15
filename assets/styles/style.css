@@ -122,13 +122,9 @@
   justify-content: left;
 }
 
-.upload-file-modal-button {
+.choose-file-input{
   border-radius: 10px;
   padding: 3px;
-  background-color: grey;
-  border-radius: 10px;
-  width: 120px;
-  border: 1px solid black;
 }
 
 .input-file-modal {
