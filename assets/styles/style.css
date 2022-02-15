@@ -1,145 +1,154 @@
-.body{
-    margin :0;
-    font-family: Arial, Helvetica, sans-serif;
+.body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.form-custom-button{
-    border-radius: 10px;
-    padding: 3px;
-    width: 130px;
-    background-color: white;
+.form-custom-button {
+  border-radius: 10px;
+  padding: 3px;
+  width: 130px;
+  background-color: white;
 }
-.form-table{
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: separate;
-    border-spacing: 2em 2em;
+.form-table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: separate;
+  border-spacing: 2em 2em;
 }
 
 /* Navigation Bar  */
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_topnav_equal_width */
 
 .navbar {
-    width: 100%;
-    background-color: rgb(191,191,191);
-    overflow: auto;
-  }
-  
+  width: 100%;
+  background-color: rgb(191, 191, 191);
+  overflow: auto;
+}
+
+.navbar a {
+  float: left;
+  padding: 12px;
+  color: black;
+  text-decoration: none;
+  font-size: 17px;
+  width: 25%;
+  text-align: center;
+
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+}
+.navbar a:hover {
+  background-color: white;
+  /* color: rgb(90,85, 23); */
+}
+.active {
+  background-color: white;
+}
+@media screen and (max-width: 500px) {
   .navbar a {
-    float: left;
-    padding: 12px;
-    color: black;
-    text-decoration: none;
-    font-size: 17px;
-    width: 25%; /* Four links of equal widths */
-    text-align: center;
+    float: none;
+    display: block;
+    width: 100%;
+    text-align: left;
   }
-  
-  /* .navbar a:hover {
-    background-color: rgb(191,191,191);
-  } */
-  
-  /* .navbar a.active {
-    background-color: white;
-  }
-   */
-   .active{
-    background-color: white;
-   }
-  @media screen and (max-width: 500px) {
-    .navbar a {
-      float: none;
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-
-  /* Group Chat Page */
-.chat-compact-hr{
-    border: 1px solid black;
-    /* margin: 0.1em auto; */
 }
 
-.chat-window{
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 30px;
+/* Group Chat Page */
+.chat-compact-hr {
+  border: 1px solid black;
+  /* margin: 0.1em auto; */
 }
 
-.group-chat-box{
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 30px;
-    min-height: 300px;
+.chat-window {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 30px;
 }
-.group-chat-button{
-    border-radius: 10px;
-    background-color: white;
-    /* font-weight: bold; */
+
+.group-chat-box {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+  min-height: 300px;
+}
+.group-chat-button {
+  border-radius: 10px;
+  background-color: white;
+  /* font-weight: bold; */
 }
 
 /* Custom Table */
 
+/* .custom-table{
+  border: 1px solid black;
+} */
+
+.table-container {
+  border: 2px solid black;
+  border-radius: 10px;
+}
 
 /* Confirm Modal */
 
 .confirm-modal-footer {
-    border-top: none;
-    justify-content: center;
+  border-top: none;
+  justify-content: center;
 }
 
 .confirm-modal-content {
-    width: 350px;
+  width: 350px;
 }
 
-.modal-button{
-    border-radius: 10px;
-    padding: 3px;
-    min-width: 100px;
-    background-color: white;
-    color:black;
+.modal-button {
+  border-radius: 10px;
+  padding: 3px;
+  min-width: 100px;
+  background-color: white;
+  color: black;
 }
 
-
-.add-document-button{
-    border-radius: 10px;
-    padding: 3px;
-    background-color: aqua;
-    border-radius: 10px;
-    width:180px;
-    border: 1px solid black;
+.add-document-button {
+  border-radius: 10px;
+  padding: 3px;
+  background-color: aqua;
+  border-radius: 10px;
+  width: 180px;
+  border: 1px solid black;
 }
 
-.add-document-modal-footer{
-    border-top: none;
-    justify-content: left;
+.add-document-modal-footer {
+  border-top: none;
+  justify-content: left;
 }
 
-.upload-file-modal-button{
-    border-radius: 10px;
-    padding: 3px;
-    background-color:grey;
-    border-radius: 10px;
-    width:120px;
-    border: 1px solid black;
+.upload-file-modal-button {
+  border-radius: 10px;
+  padding: 3px;
+  background-color: grey;
+  border-radius: 10px;
+  width: 120px;
+  border: 1px solid black;
 }
 
-.input-file-modal{
-    border-radius: 5px;
-    border: 1px solid black;
+.input-file-modal {
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 /* Manage Document Page */
-.add-sharing-container{
-    border-radius: 10px;
-    border: 1px solid black;
+.add-sharing-container {
+  border-radius: 10px;
+  border: 2px solid black;
 }
 
-.add-sharing-row{
-    padding-top: 30px;
-    padding-bottom: 30px;
-    
+.add-sharing-row {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.manage-documents-dropdown-list {
+  width: 80%;
+  border: 2px solid black;
+  border-radius: 10px;
 }

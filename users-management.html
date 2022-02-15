@@ -30,54 +30,56 @@
     <!-- End: nav bar-->
     <div class="container-fluid" style="padding: 10px; padding-top: 20px;">
         <h4>Users</h4>
-        <table class="table  table-bordered table-striped">
-            <thead>
-                <tr style="background-color: rgb(200,200,200);">
-                    <th>Name</th>
-                    <th style='text-align:center'>User Email ID</th>
-                    <th> </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Text User</td>
-                    <td style='text-align:center'>textuser@mail.com</td>
-                    <td style='text-align:center'>
-                        <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                            Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Anne Hunter</td>
-                    <td style='text-align:center'>anne.hunter@mail.com</td>
-                    <td style='text-align:center'>
-                        <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                            Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Jale Boser</td>
-                    <td style='text-align:center'>Jale@yahoo.com</td>
-                    <td style='text-align:center'>
-                        <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                            Delete</button>
-                    </td>
-                </tr>
-                <!-- to provide blank rows-->
-                <script>
-                    for (var i = 0; i < 5; i++) {
-                        document.write("<tr>")
-                        document.write("<td>.</td>")
-                        document.write("<td></td>")
-                        document.write("<td></td>")
-                        document.write("</tr>")
-                    }
-                </script>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="table  table-bordered table-striped">
+                <thead>
+                    <tr style="background-color: rgb(200,200,200);">
+                        <th>Name</th>
+                        <th style='text-align:center'>User Email ID</th>
+                        <th> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Text User</td>
+                        <td style='text-align:center'>textuser@mail.com</td>
+                        <td style='text-align:center'>
+                            <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Anne Hunter</td>
+                        <td style='text-align:center'>anne.hunter@mail.com</td>
+                        <td style='text-align:center'>
+                            <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jale Boser</td>
+                        <td style='text-align:center'>Jale@yahoo.com</td>
+                        <td style='text-align:center'>
+                            <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                                Delete</button>
+                        </td>
+                    </tr>
+                    <!-- to provide blank rows-->
+                    <script>
+                        for (var i = 0; i < 5; i++) {
+                            document.write("<tr>")
+                            document.write("<td>.</td>")
+                            document.write("<td></td>")
+                            document.write("<td></td>")
+                            document.write("</tr>")
+                        }
+                    </script>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Start: Delete User Modal -->

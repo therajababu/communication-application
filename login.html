@@ -13,6 +13,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/styles/style.css">
+    <script src="./assets/scripts/app.js"></script>
 
     <title>Login</title>
 </head>
@@ -20,11 +21,11 @@
 <body>
     <div class="container" style="padding-top: 100px;text-align:center;">
         <!-- Start: Form-->
-        <form action="login-successful.html">
+        <form action="login-successful.html" name="loginForm" method="GET" onsubmit="return onLoginSubmitHandler()" required>
             <table class="form-table">
                 <thead>
                     <tr>
-                        <td></td> 
+                        <td></td>
                         <td>
                             <h3>Login</h3>
                         </td>
@@ -33,14 +34,13 @@
                 <tbody>
                     <tr>
                         <td style="text-align: right;"><label for="email">Email</label></td>
-                        <td><input type="email" id="email" style="border-radius: 5px;"
+                        <td><input type="text" id="email" style="border-radius: 5px;"
                                 placeholder="anne.hunter@mail.com">
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align: right;"><label for="password">Password</label></td>
-                        <td><input type="password" id="password" style="border-radius: 5px;"
-                                placeholder="******">
+                        <td><input type="password" id="password" style="border-radius: 5px;" placeholder="******">
                         </td>
                     </tr>
                     <tr>

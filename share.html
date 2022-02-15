@@ -32,42 +32,53 @@
     <!-- <div style="padding-top: 30px;padding-left: 15px;padding-right: 15px;"> -->
     <div class="container-fluid" style="padding: 10px; padding-top: 20px;">
         <p style="font-size:21px;"><b>Upload Sharing :</b> Sample.txt </p>
-        <table class="table  table-bordered table-striped" style="padding-left: 20px;">
-            <thead>
-                <tr style="background-color: rgb(200,200,200);">
-                    <th>Shared User</th>
-                    <th style='text-align:center'>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sales Report</td>
-                    <td style="text-align: center;">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
-                            Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Text User</td>
-                    <td style="text-align: center;">
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
-                            Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
+        <div class="table-container">
+            <table class="table  table-bordered table-striped custom-table" style="padding-left: 20px;">
+                <thead>
+                    <tr style="background-color: rgb(200,200,200);">
+                        <th>Shared User</th>
+                        <th style='text-align:center'>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sales Report</td>
+                        <td style="text-align: center;">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentModal">
+                                Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Text User</td>
+                        <td style="text-align: center;">
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentModal">
+                                Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <br>
         <h4>Add Sharing</h4>
         <div class="container-fluid add-sharing-container" style="padding:0px;">
-            <div class="row add-sharing-row" >
+            <div class="row add-sharing-row">
                 <div class="col-lg-2" style="text-align:right">
                     Choose User :
                 </div>
-                <div class="col-lg-5" >
-                    <input class="input-file-modal" style="width:80%;"></input>
+                <div class="col-lg-5">
+                    <div class="dropdown">
+                        <input class="input-file-modal dropdown-toggle" data-bs-toggle="dropdown"
+                            style="width:80%;"></input>
+                        <ul class="dropdown-menu text-center manage-documents-dropdown-list">
+                            <li class="dropdown-item"> J Bose</li>
+                            <li class="dropdown-item"> HR</li>
+                            <li class="dropdown-item"> Harsh Zaveri</li>
+                        </ul>
+                    </div>
+
                 </div>
                 <div class="col-lg-5" style="text-align:left">
                     <button class="modal-button" style="width:150px;background-color: grey;">Add Share</button>
@@ -77,9 +88,9 @@
 
     </div>
 
-
     <!-- Start: Delete Document Modal -->
-    <div class="modal fade" id="deleteDocumentModal" tabindex="-1" aria-labelledby="deleteDocumentModal" aria-hidden="true">
+    <div class="modal fade" id="deleteDocumentModal" tabindex="-1" aria-labelledby="deleteDocumentModal"
+        aria-hidden="true">
         <div class="modal-dialog  modal-dialog-centered">
             <div class="modal-content confirm-modal-content ">
                 <div class="modal-header">

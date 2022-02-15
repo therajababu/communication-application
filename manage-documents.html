@@ -31,94 +31,104 @@
 
     <div style="padding-top: 30px;padding-left: 15px;padding-right: 15px;">
         <h4>My Uploads</h4>
-        <table class="table  table-bordered table-striped" style="padding-left: 20px;">
-            <thead>
-                <tr style="background-color: rgb(200,200,200);">
-                    <th>Label</th>
-                    <th style='text-align:center'>File Name</th>
-                    <th style='text-align:center'>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sales Report</td>
-                    <td style='text-align:center'>sales-Sep2014.xls</td>
-                    <td style='text-align:center'>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDocumentModal">
-                            Edit
-                        </button> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
-                            Delete
-                        </button> |
-                        <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Quaterly Summary</td>
-                    <td style='text-align:center'>SummaryQ4-2014.ppt</td>
-                    <td style='text-align:center'>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDocumentModal">
-                            Edit
-                        </button> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
-                            Delete
-                        </button> |
-                        <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Projection 2013-14</td>
-                    <td style='text-align:center'>SalesProfitProjection.xls</td>
-                    <td style='text-align:center'>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editDocumentModal">
-                            Edit
-                        </button> |
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteDocumentModal">
-                            Delete
-                        </button> |
-                        <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table class="table  table-bordered table-striped" style="padding-left: 20px;">
+                <thead>
+                    <tr style="background-color: rgb(200,200,200);">
+                        <th>Label</th>
+                        <th style='text-align:center'>File Name</th>
+                        <th style='text-align:center'>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sales Report</td>
+                        <td style='text-align:center'>sales-Sep2014.xls</td>
+                        <td style='text-align:center'>
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#editDocumentModal">
+                                Edit
+                            </button> |
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentModal">
+                                Delete
+                            </button> |
+                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Quaterly Summary</td>
+                        <td style='text-align:center'>SummaryQ4-2014.ppt</td>
+                        <td style='text-align:center'>
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#editDocumentModal">
+                                Edit
+                            </button> |
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentModal">
+                                Delete
+                            </button> |
+                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Projection 2013-14</td>
+                        <td style='text-align:center'>SalesProfitProjection.xls</td>
+                        <td style='text-align:center'>
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#editDocumentModal">
+                                Edit
+                            </button> |
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#deleteDocumentModal">
+                                Delete
+                            </button> |
+                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
 
 
         <br>
         <h4>Shared Uploads</h4>
-        <table class="table  table-bordered table-striped" style="padding-left: 20px;">
-            <thead>
-                <tr style="background-color: rgb(200,200,200);">
-                    <th>Label</th>
-                    <th style='text-align:center'>File Name</th>
-                    <th style='text-align:center'>Shared By</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sales Team Attendance Sept 2014</td>
-                    <td style='text-align:center'>Sale-Attend-Sep2014.xls</td>
-                    <td style='text-align:center'>anne.hunter@mail.com</td>
-                </tr>
-                <tr>
-                    <td>Office Rules</td>
-                    <td style='text-align:center'>OfficeRule.doc</td>
-                    <td style='text-align:center'>hr@office.com</td>
-                </tr>
-                <tr>
-                    <td>
-                        <button type="button" class="btn add-document-button" data-bs-toggle="modal"
-                            data-bs-target="#addDocumentModal">
-                            + Add Upload
-                        </button>
-                    </td>
-                    <td></td>
-                    <td></td>
+        <div class="table-container">
+            <table class="table  table-bordered table-striped" style="padding-left: 20px;">
+                <thead>
+                    <tr style="background-color: rgb(200,200,200);">
+                        <th>Label</th>
+                        <th style='text-align:center'>File Name</th>
+                        <th style='text-align:center'>Shared By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sales Team Attendance Sept 2014</td>
+                        <td style='text-align:center'>Sale-Attend-Sep2014.xls</td>
+                        <td style='text-align:center'>anne.hunter@mail.com</td>
+                    </tr>
+                    <tr>
+                        <td>Office Rules</td>
+                        <td style='text-align:center'>OfficeRule.doc</td>
+                        <td style='text-align:center'>hr@office.com</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn add-document-button" data-bs-toggle="modal"
+                                data-bs-target="#addDocumentModal">
+                                + Add Upload
+                            </button>
+                        </td>
+                        <td></td>
+                        <td></td>
 
-                </tr>
-            </tbody>
+                    </tr>
+                </tbody>
 
-        </table>
+            </table>
+        </div>
     </div>
 
     <!-- Start: Add Document Modal -->
@@ -135,7 +145,8 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" style="width: 100%;" placeholder=" Sales Report">
+                            <input type="text" class="input-file-modal" style="width: 100%;"
+                                placeholder=" Sales Report">
                         </div>
                     </div>
                     <br>
@@ -181,7 +192,8 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" style="width: 100%;" placeholder=" Sales Report">
+                            <input type="text" class="input-file-modal" style="width: 100%;"
+                                placeholder=" Sales Report">
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,7 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/styles/style.css">
+    <script src="./assets/scripts/app.js"></script>
 
     <title>Register</title>
 </head>
@@ -20,7 +21,7 @@
 <body>
     <div class="container" style="padding-top: 80px;text-align:center;">
         <!-- Start: Form-->
-        <form action="register-successful.html">
+        <form name="registerForm" action="register-successful.html" method="GET" onsubmit="return validateRegisterFormSubmitHandler()" required>
             <table class="form-table">
                 <thead>
                     <tr>
@@ -38,7 +39,7 @@
                     <tr>
                         <td style="text-align: right;"><label for="email">Email</label></td>
                         <td>
-                            <input type="email" id="email" style="border-radius: 5px;"
+                            <input type="text" id="email" style="border-radius: 5px;"
                                 placeholder="anne.hunter@mail.com">
                         </td>
                     </tr>
