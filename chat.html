@@ -19,27 +19,24 @@
 
 <body>
     <!-- Start: nav bar-->
-    <navbar>
-        <div class="navbar">
-            <a class="active" href="chat.html">Group Chat</a>
-            <a href="users-management.html">Manage Users</a>
-            <a href="manage-documents.html">Manage Documents</a>
-            <a href="logout.html">Logout</a>
-        </div>
-    </navbar>
+    <div class="navbar">
+        <a class="active" href="chat.html">Group Chat</a>
+        <a href="users-management.html">Manage Users</a>
+        <a href="manage-documents.html">Manage Documents</a>
+        <a href="logout.html">Logout</a>
+    </div>
     <!-- End: nav bar-->
-
+    <br><br>
     <div class="container-fluid" style="padding: 0px;">
         <div class="container-fluid chat-window">
-            <hr class="chat-compact-hr" style="margin: 0.1em auto;">
+            <!-- <hr class="chat-compact-hr" style="margin: 0.1em auto;"> -->
             <!-- Group Chat Bar-->
             <div class="row">
-                <div class="col-md-11 text-center">Group Chat</div>
+                <div class="col-md-11 text-center" style="font-weight:bold;">Group Chat</div>
                 <div class="col-md-1 text-center">
                     <a><button style="border-radius: 5px;"> X</button></a>
                 </div>
             </div>
-            <hr class="chat-compact-hr" style="margin: 0.1em auto;">
             <!-- Chat Window-->
             <div class="group-chat-box">
                 <p>
@@ -49,9 +46,8 @@
                     [2013-01-27 02:11;35] Jack Washk: aliquyam erat, sed diam voluptua. At vero eos et <br>
                 </p>
             </div>
-            <hr style="border: 1px solid black;">
             <!-- Chat Footer-->
-            <div class="row">
+            <div class="row group-chat-send-box">
                 <div class="col-md-2" style="text-align:right">
                     Anne Hunter
                 </div>
@@ -63,7 +59,6 @@
                     <button class="group-chat-button">Refresh</button>
                 </div>
             </div>
-            <hr style="border: 1px solid black;">
         </div>
     </div>
 
