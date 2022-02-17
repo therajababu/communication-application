@@ -19,9 +19,10 @@
 </head>
 
 <body>
-    <div class="container" style="padding-top: 80px;text-align:center;">
+    <div class="container form-page-container">
         <!-- Start: Form-->
-        <form name="registerForm" action="register-successful.html" method="GET" onsubmit="return validateRegisterFormSubmitHandler()" required>
+        <form name="registerForm" action="register-successful.html" method="GET"
+            onsubmit="return validateRegisterFormSubmitHandler()" required>
             <table class="form-table">
                 <thead>
                     <tr>
@@ -33,35 +34,33 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="text-align: right;"><label for="fullName">Full Name</label></td>
-                        <td><input type="text" id="fullName" style="border-radius: 5px;" placeholder="Anne Hunter"></td>
+                        <!-- <td style="text-align: right;"><label for="fullName">Full Name</label></td> -->
+                        <td class="text-right"><label for="fullName">Full Name</label></td>
+                        <td><input type="text" id="fullName" class="form-input-field" placeholder="Anne Hunter"></td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;"><label for="email">Email</label></td>
+                        <td class="text-right"><label for="email">Email</label></td>
                         <td>
-                            <input type="text" id="email" style="border-radius: 5px;"
-                                placeholder="anne.hunter@mail.com">
+                            <input type="text" id="email" class="form-input-field" placeholder="anne.hunter@mail.com">
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;"><label for="password">Password</label></td>
+                        <td class="text-right"><label for="password">Password</label></td>
                         <td>
-                            <input type="password" id="password" style="border-radius: 5px;"
-                                placeholder="Enter Password">
+                            <input type="password" id="password" class="form-input-field" placeholder="Enter Password">
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;"><label for="confirmPassword">Confirm Password</label></td>
+                        <td class="form-lable-right"><label for="confirmPassword">Confirm Password</label></td>
                         <td>
-                            <input type="password" id="confirmPassword" style="border-radius: 5px;"
+                            <input type="password" id="confirmPassword" class="form-input-field"
                                 placeholder="Confirm Password">
                         </td>
                     </tr>
                     <tr>
                         <td> </td>
                         <td>
-                            <button type="submit" class="form-custom-button"
-                                style="background-color: aqua;">Register</button>
+                            <button type="submit" class="form-custom-button aqua-button">Register</button>
                         </td>
                     </tr>
                 </tbody>

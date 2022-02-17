@@ -29,21 +29,20 @@
     </navbar>
     <!-- End: nav bar-->
 
-    <!-- <div style="padding-top: 30px;padding-left: 15px;padding-right: 15px;"> -->
-    <div class="container-fluid" style="padding: 10px; padding-top: 20px;">
-        <p style="font-size:21px;"><b>Upload Sharing :</b> Sample.txt </p>
+    <div class="container-fluid share-page-container">
+        <p class="upload-sharing-title"><b>Upload Sharing :</b> Sample.txt </p>
         <div class="table-container">
-            <table class="table  table-bordered table-striped custom-table" style="padding-left: 20px;">
+            <table class="table  table-bordered table-striped custom-table">
                 <thead>
-                    <tr style="background-color: rgb(200,200,200);">
+                    <tr class="table-tr-grey">
                         <th>Shared User</th>
-                        <th style='text-align:center'>Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Sales Report</td>
-                        <td style="text-align: center;">
+                        <td class="text-center">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteDocumentModal">
                                 Delete</button>
@@ -51,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>Text User</td>
-                        <td style="text-align: center;">
+                        <td class="text-center">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#deleteDocumentModal">
                                 Delete</button>
@@ -63,9 +62,9 @@
 
         <br>
         <h4>Add Sharing</h4>
-        <div class="container-fluid add-sharing-container" style="padding:0px;">
+        <div class="container-fluid add-sharing-container zero-padding">
             <div class="row add-sharing-row">
-                <div class="col-sm-2" style="text-align:right">
+                <div class="col-sm-2 text-right">
                     Choose User :
                 </div>
                 <div class="col-sm-5">
@@ -75,8 +74,8 @@
                         <option value="Harsh Zaveri">Harsh Zaveri</option>
                     </select>
                 </div>
-                <div class="col-sm-5" style="text-align:left">
-                    <button class="modal-button" style="width:150px;background-color: grey;">Add Share</button>
+                <div class="col-sm-5">
+                    <button class="grey-button">Add Share</button>
                 </div>
             </div>
         </div>
@@ -92,9 +91,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p style="text-align:center">
+                    <p class="text-center">
                         <br>
-                        <img src="./assets/images/question.png" style="width:40px;">
+                        <img src="./assets/images/question.png" class="question-img">
                         Are you sure ?
                     </p>
                 </div>

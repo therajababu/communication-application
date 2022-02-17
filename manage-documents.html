@@ -29,22 +29,22 @@
     </navbar>
     <!-- End: nav bar-->
 
-    <div style="padding-top: 30px;padding-left: 15px;padding-right: 15px;">
+    <div class="manage-doc-page-container">
         <h4>My Uploads</h4>
         <div class="table-container">
-            <table class="table  table-bordered table-striped table-responsive" style="padding-left: 20px;">
+            <table class="table  table-bordered table-striped table-responsive">
                 <thead>
-                    <tr style="background-color: rgb(200,200,200);">
+                    <tr class="table-tr-grey">
                         <th>Label</th>
-                        <th style='text-align:center'>File Name</th>
-                        <th style='text-align:center'>Action</th>
+                        <th class="text-center">File Name</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Sales Report</td>
-                        <td style='text-align:center'>sales-Sep2014.xls</td>
-                        <td style='text-align:center'>
+                        <td class="text-center">sales-Sep2014.xls</td>
+                        <td class="text-center">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#editDocumentModal">
                                 Edit
@@ -58,8 +58,8 @@
                     </tr>
                     <tr>
                         <td>Quaterly Summary</td>
-                        <td style='text-align:center'>SummaryQ4-2014.ppt</td>
-                        <td style='text-align:center'>
+                        <td class="text-center">SummaryQ4-2014.ppt</td>
+                        <td class="text-center">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#editDocumentModal">
                                 Edit
@@ -73,8 +73,8 @@
                     </tr>
                     <tr>
                         <td>Projection 2013-14</td>
-                        <td style='text-align:center'>SalesProfitProjection.xls</td>
-                        <td style='text-align:center'>
+                        <td class="text-center">SalesProfitProjection.xls</td>
+                        <td class="text-center">
                             <button type="button" class="btn" data-bs-toggle="modal"
                                 data-bs-target="#editDocumentModal">
                                 Edit
@@ -86,7 +86,7 @@
                             <a href="share.html"><button type="button" class="btn ">Share</button></a>
                         </td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -96,24 +96,24 @@
         <br>
         <h4>Shared Uploads</h4>
         <div class="table-container">
-            <table class="table  table-bordered table-striped table-responsive" style="padding-left: 20px;">
+            <table class="table  table-bordered table-striped table-responsive">
                 <thead>
-                    <tr style="background-color: rgb(200,200,200);">
+                    <tr class="table-tr-grey">
                         <th>Label</th>
-                        <th style='text-align:center'>File Name</th>
-                        <th style='text-align:center'>Shared By</th>
+                        <th class="text-center">File Name</th>
+                        <th class="text-center">Shared By</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Sales Team Attendance Sept 2014</td>
-                        <td style='text-align:center'>Sale-Attend-Sep2014.xls</td>
-                        <td style='text-align:center'>anne.hunter@mail.com</td>
+                        <td class="text-center">Sale-Attend-Sep2014.xls</td>
+                        <td class="text-center">anne.hunter@mail.com</td>
                     </tr>
                     <tr>
                         <td>Office Rules</td>
-                        <td style='text-align:center'>OfficeRule.doc</td>
-                        <td style='text-align:center'>hr@office.com</td>
+                        <td class="text-center">OfficeRule.doc</td>
+                        <td class="text-center">hr@office.com</td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
@@ -131,7 +131,7 @@
                         <td></td>
 
                     </tr>
-                    
+
                 </tbody>
 
             </table>
@@ -152,8 +152,7 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" style="width: 100%;"
-                                placeholder=" Sales Report">
+                            <input type="text" class="input-file-modal" placeholder=" Sales Report">
                         </div>
                     </div>
                     <br>
@@ -166,13 +165,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer add-document-modal-footer" style="padding-bottom:30px;">
-                    <button type=" button" class="btn btn-secondary modal-button" data-bs-dismiss="modal"
-                        style="background-color: grey;">
+                <div class="modal-footer add-document-modal-footer">
+                    <button type="button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
                         Save
                     </button>
-                    <button type="button" class="btn btn-secondary modal-button" data-bs-dismiss="modal"
-                        style="background-color: grey;">
+                    <button type="button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
                         Cancel
                     </button>
                 </div>
@@ -196,18 +193,15 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" style="width: 100%;"
-                                placeholder=" Sales Report">
+                            <input type="text" class="input-file-modal" placeholder=" Sales Report">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer confirm-modal-footer" style="padding-bottom:30px;">
-                    <button type=" button" class="btn btn-secondary modal-button" data-bs-dismiss="modal"
-                        style="background-color: grey;">
+                <div class="modal-footer confirm-modal-footer">
+                    <button type=" button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
                         Save
                     </button>
-                    <button type="button" class="btn btn-secondary modal-button" data-bs-dismiss="modal"
-                        style="background-color: grey;">
+                    <button type="button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
                         Cancel
                     </button>
                 </div>
@@ -226,9 +220,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p style="text-align:center">
+                    <p class="text-center">
                         <br>
-                        <img src="./assets/images/question.png" style="width:40px;">
+                        <img src="./assets/images/question.png" class="question-img">
                         Are you sure ?
                     </p>
                 </div>

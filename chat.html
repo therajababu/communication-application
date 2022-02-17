@@ -27,37 +27,34 @@
     </div>
     <!-- End: nav bar-->
     <br><br>
-    <div class="container-fluid" style="padding: 0px;">
-        <div class="container-fluid chat-window">
-            <!-- <hr class="chat-compact-hr" style="margin: 0.1em auto;"> -->
-            <!-- Group Chat Bar-->
-            <div class="row">
-                <div class="col-md-11 text-center" style="font-weight:bold;">Group Chat</div>
-                <div class="col-md-1 text-center">
-                    <a><button style="border-radius: 5px;"> X</button></a>
-                </div>
+    <div class="container-fluid chat-window">
+        <!-- Group Chat Bar-->
+        <div class="row">
+            <div class="col-md-11 text-center text-bold">Group Chat</div>
+            <div class="col-md-1 text-center">
+                <a><button class="group-chat-cross-button"> X</button></a>
             </div>
-            <!-- Chat Window-->
-            <div class="group-chat-box">
-                <p>
-                    [2013-01-27 01:00:16] Text User : Lorem ipsum dolor sit amet, <br>
-                    [2013-01-27 01:05:22] Text User : consetetur sadipscing elitr, sed diam nonumy eirmod <br>
-                    [2013-01-27 01:11:14] Anne Hunter : tempor invidunt ut labore et dolore magna <br>
-                    [2013-01-27 02:11;35] Jack Washk: aliquyam erat, sed diam voluptua. At vero eos et <br>
-                </p>
+        </div>
+        <!-- Chat Window-->
+        <div class="group-chat-box">
+            <p>
+                [2013-01-27 01:00:16] Text User : Lorem ipsum dolor sit amet, <br>
+                [2013-01-27 01:05:22] Text User : consetetur sadipscing elitr, sed diam nonumy eirmod <br>
+                [2013-01-27 01:11:14] Anne Hunter : tempor invidunt ut labore et dolore magna <br>
+                [2013-01-27 02:11;35] Jack Washk: aliquyam erat, sed diam voluptua. At vero eos et <br>
+            </p>
+        </div>
+        <!-- Chat Footer-->
+        <div class="row group-chat-send-box">
+            <div class="col-md-2 text-right">
+                Anne Hunter
             </div>
-            <!-- Chat Footer-->
-            <div class="row group-chat-send-box">
-                <div class="col-md-2" style="text-align:right">
-                    Anne Hunter
-                </div>
-                <div class="col-md-8">
-                    <input type="text" id="msg" style="border-radius: 5px;width: 100%;" placeholder="  I am good">
-                </div>
-                <div class="col-md-2">
-                    <button class="group-chat-button">Send</button>
-                    <button class="group-chat-button">Refresh</button>
-                </div>
+            <div class="col-md-8">
+                <input type="text" id="msg" class="grou-chat-msg-input" placeholder="  I am good">
+            </div>
+            <div class="col-md-2">
+                <button class="group-chat-button">Send</button>
+                <button class="group-chat-button">Refresh</button>
             </div>
         </div>
     </div>

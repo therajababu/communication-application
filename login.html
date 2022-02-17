@@ -19,9 +19,10 @@
 </head>
 
 <body>
-    <div class="container" style="padding-top: 100px;text-align:center;">
+    <div class="container form-page-container">
         <!-- Start: Form-->
-        <form action="login-successful.html" name="loginForm" method="GET" onsubmit="return onLoginSubmitHandler()" required>
+        <form action="login-successful.html" name="loginForm" method="GET" onsubmit="return onLoginSubmitHandler()"
+            required>
             <table class="form-table">
                 <thead>
                     <tr>
@@ -33,21 +34,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="text-align: right;"><label for="email">Email</label></td>
-                        <td><input type="text" id="email" style="border-radius: 5px;"
-                                placeholder="anne.hunter@mail.com">
+                        <td class="text-right"><label for="email">Email</label></td>
+                        <td><input type="text" id="email" class="form-input-field" placeholder="anne.hunter@mail.com">
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right;"><label for="password">Password</label></td>
-                        <td><input type="password" id="password" style="border-radius: 5px;" placeholder="******">
+                        <td class="text-right"><label for="password">Password</label></td>
+                        <td><input type="password" id="password" class="form-input-field" placeholder="******">
                         </td>
                     </tr>
                     <tr>
                         <td> </td>
                         <td>
-                            <button type="submit" class="form-custom-button"
-                                style="background-color: aqua;">Login</button>
+                            <button type="submit" class="form-custom-button aqua-button">Login</button>
                         </td>
                     </tr>
                 </tbody>
