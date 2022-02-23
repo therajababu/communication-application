@@ -1,7 +1,19 @@
-function isEmailValid(email) {
-    var aPos = email.indexOf("@");
-    var dotPos = email.lastIndexOf(".");
 
+
+function pageLoadHandler(){
+    // checking for all local storage
+    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('usersLS'));
+    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
+}
+
+function isUserLoggedIn(){
+    alert("Checking!")
+}
+
+function isEmailValid(email) {
+    let aPos = email.indexOf("@");
+    let dotPos = email.lastIndexOf(".");
+    
     if (aPos < 1 || dotPos - aPos < 2) {
         return false;
     } else {
@@ -9,49 +21,37 @@ function isEmailValid(email) {
     }
 }
 
-
 function onLoginSubmitHandler() {
-
-    var email = document.forms["loginForm"]["email"].value;
-    var password = document.forms["loginForm"]["password"].value;
-
-    // console.log(email);
-    // console.log(password);
+    let email = document.forms["loginForm"]["email"].value;
+    let password = document.forms["loginForm"]["password"].value;
+    // console.log(email, password);
 
     if (email == "" && password == "") {
-        alert("Email & Password can't be blank, must be filled out!");
+        alert("Enter your Email & Password!");
         return false;
     } else if (email == "") {
-        alert("Email can't be blank, must be filled out!");
+        alert("Enter your Email!");
         return false;
     } else if (password == "") {
-        alert("Password can't be blank, must be filled out!");
+        alert("Enter your Password!");
         return false;
-    } else if (email != "") {
-
-        var aPos = email.indexOf("@");
-        var dotPos = email.lastIndexOf(".");
-
-        if (aPos < 1 || dotPos - aPos < 2) {
-            alert("Please enter valid email id!");
-            return false;
-        } else {
-            return true;
-        }
-    } else {
+    } else if (!isEmailValid) { // invalid email
+        alert("Enter a valid email id!");
+        return false;
+    } else { // everything is valid
         return true;
     }
 }
 
 function validateRegisterFormSubmitHandler() {
     // Getting user data
-    var getUsersFromLS = JSON.parse(localStorage.getItem('usersLS'));
-    var users = getUsersFromLS ? getUsersFromLS : [];
+    // let getUsersFromLS = JSON.parse(localStorage.getItem('usersLS'));
+    // let users = getUsersFromLS ? getUsersFromLS : [];
 
-    var fullName = document.forms["registerForm"]["fullName"].value;
-    var email = document.forms["registerForm"]["email"].value;
-    var password = document.forms["registerForm"]["password"].value;
-    var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
+    let fullName = document.forms["registerForm"]["fullName"].value;
+    let email = document.forms["registerForm"]["email"].value;
+    let password = document.forms["registerForm"]["password"].value;
+    let confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
     // console.log(fullName, email, password, confirmPassword);
 
     if (fullName == "") {
