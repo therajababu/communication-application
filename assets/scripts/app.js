@@ -44,31 +44,27 @@ function onLoginSubmitHandler() {
 }
 
 function validateRegisterFormSubmitHandler() {
-
     // Getting user data
     var getUsersFromLS = JSON.parse(localStorage.getItem('usersLS'));
-
     var users = getUsersFromLS ? getUsersFromLS : [];
-    console.log("users", users);
 
     var fullName = document.forms["registerForm"]["fullName"].value;
     var email = document.forms["registerForm"]["email"].value;
     var password = document.forms["registerForm"]["password"].value;
     var confirmPassword = document.forms["registerForm"]["confirmPassword"].value;
-
-    console.log(fullName, email, password, confirmPassword);
+    // console.log(fullName, email, password, confirmPassword);
 
     if (fullName == "") {
-        alert("Name can't be blank, must be filled out!");
+        alert("Please enter your Name!");
         return false;
     } else if (email == "") {
-        alert("Email can't be blank, must be filled out!");
+        alert("Please enter your Email!");
         return false;
     } else if (password == "") {
-        alert("Password can't be blank, must be filled out!");
+        alert("Please enter your Password!");
         return false;
     } else if (confirmPassword == "") {
-        alert("Confirm Password can't be blank, must be filled out!");
+        alert("Please enter Confirm Password!");
         return false;
     } else if (password !== confirmPassword) {
         alert("Both password should match!");
@@ -77,8 +73,16 @@ function validateRegisterFormSubmitHandler() {
         alert("Please enter valid email id!");
         return false;
     } else { // If everything is valid
+        // Stroring the user into Local Storage
+        userRegisterDetails = {
+            id: Number(new Date()), // Epoch 
+            fullName: fullName,
+            email: email,
+            password: password
+        }
+        users.push(userRegisterDetails);
+        localStorage.setItem('usersLS', JSON.stringify(users));
 
-        
         return true;
     }
 }
