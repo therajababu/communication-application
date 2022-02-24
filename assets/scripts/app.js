@@ -2,15 +2,17 @@
 
 let LOGGED_IN_USER = [];
 
+function getCurrentDateTime(){
+    let currDateTime = new Date().toLocaleString();
+    return currDateTime;
+}
 
 function loggedInUser() {
     // checking the local storage
     let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUserLS'));
     // updating gloabl variable
     LOGGED_IN_USER = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
-
 }
-
 
 function pageLoadHandler() {
     loggedInUser();
@@ -25,8 +27,16 @@ function pageLoadHandler() {
 
 function loginSuccessfulPageLoadHandler(){
     pageLoadHandler();
-
+    // updating username on page
     document.getElementById("user-email").innerHTML = LOGGED_IN_USER.email;
+}
+
+function groupChatPageLoadHandler(){
+    pageLoadHandler();
+    // displaying default msg on chat window
+    let msg = "[" +getCurrentDateTime() + "] " + LOGGED_IN_USER.fullName + " : Type your message .....";
+    document.getElementById("group-chat-messages").innerHTML = msg;
+    document.getElementById("user-full-name").innerHTML = LOGGED_IN_USER.fullName;
 }
 
 function isEmailValid(email) {
@@ -79,7 +89,7 @@ function onLoginSubmitHandler() {
             }
         }
         // user dont exist
-        alert("This user doesn't exist!");
+        alert("Enter correct email & password!");
         return false;
     }
 }
