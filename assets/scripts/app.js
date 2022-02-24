@@ -6,7 +6,9 @@ let LOGGED_IN_USER = [];
 function loggedInUser() {
     // checking the local storage
     let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUserLS'));
+    // updating gloabl variable
     LOGGED_IN_USER = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+
 }
 
 
@@ -21,7 +23,11 @@ function pageLoadHandler() {
     }
 }
 
+function loginSuccessfulPageLoadHandler(){
+    pageLoadHandler();
 
+    document.getElementById("user-email").innerHTML = LOGGED_IN_USER.email;
+}
 
 function isEmailValid(email) {
     let aPos = email.indexOf("@");
@@ -35,7 +41,8 @@ function isEmailValid(email) {
 }
 
 function onLoginSubmitHandler() {
-    // Checking logged in user
+    // Checking logged in user bacause
+    // when login page loads, it doesn't call pageLoadHandler() 
     loggedInUser();
 
     // Getting user data
@@ -68,7 +75,7 @@ function onLoginSubmitHandler() {
                 // saving to local storage
                 localStorage.setItem('loggedInUserLS', JSON.stringify(LOGGED_IN_USER));
                 // allow to be redirected to login successful page
-                return true; 
+                return true;
             }
         }
         // user dont exist
