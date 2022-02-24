@@ -1,23 +1,27 @@
-let loggedInUsers;
+// Global variable
+
+let LOGGED_IN_USER = [];
+
+
+function loggedInUser() {
+    // checking the local storage
+    let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUserLS'));
+    LOGGED_IN_USER = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+}
+
 
 function pageLoadHandler() {
-    console.log(localStorage);
-    // checking for all local storage
-    // let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUser'));
-    // let loggedInUsers = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+    loggedInUser();
 
-    // if(getLoggedInUsersFromLocalStorage == null){
-    //     // redirect to welcome page
-    //     location.href = 'welcome.html';
-    // } else{
-    //     loggedInUsers = getLoggedInUsersFromLocalStorage.email;
-    // }
-
+    if (LOGGED_IN_USER.length == 0) { // no user is stored
+        // redirect to welcome page
+        location.href = 'welcome.html';
+    } else {
+        // do nothing
+    }
 }
 
-function isUserLoggedIn() {
-    alert("Checking!")
-}
+
 
 function isEmailValid(email) {
     let aPos = email.indexOf("@");
@@ -31,6 +35,13 @@ function isEmailValid(email) {
 }
 
 function onLoginSubmitHandler() {
+    // Checking logged in user
+    loggedInUser();
+
+    // Getting user data
+    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('usersLS'));
+    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
+
     let email = document.forms["loginForm"]["email"].value;
     let password = document.forms["loginForm"]["password"].value;
     // console.log(email, password);
@@ -48,7 +59,21 @@ function onLoginSubmitHandler() {
         alert("Enter a valid email id!");
         return false;
     } else { // everything is valid
-        return true;
+        // checking for email and password
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email == email && users[i].password == password) {
+                // user is found in database
+                // updating global variable
+                LOGGED_IN_USER = users[i];
+                // saving to local storage
+                localStorage.setItem('loggedInUserLS', JSON.stringify(LOGGED_IN_USER));
+                // allow to be redirected to login successful page
+                return true; 
+            }
+        }
+        // user dont exist
+        alert("This user doesn't exist!");
+        return false;
     }
 }
 
@@ -98,9 +123,7 @@ function validateRegisterFormSubmitHandler() {
             // checking for existing record
             let isUserExist = false;
             for (let i = 0; i < users.length; i++) {
-                console.log(users[i].email == email);
                 if (users[i].email == email) {
-                    console.log("Email - ", users[i].email);
                     isUserExist = true;
                     break; // user is found
                 }
