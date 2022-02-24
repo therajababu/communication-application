@@ -24,7 +24,7 @@
         <a class="active" href="chat.html">Group Chat</a>
         <a href="users-management.html">Manage Users</a>
         <a href="manage-documents.html">Manage Documents</a>
-        <a href="logout.html">Logout</a>
+        <a href="logout.html" onclick="logoutUser()">Logout</a>
     </div>
     <!-- End: nav bar-->
     <br><br>
@@ -39,7 +39,7 @@
         <!-- Chat Window-->
         <div class="group-chat-box">
             <p id="group-chat-messages">
-                [24/02/2022, 23:52:03] Raja Babu : Type your message ..... <br>
+                <!-- all users messages will appear here -->
             </p>
         </div>
         <!-- Chat Footer-->
@@ -48,11 +48,11 @@
                 <!-- user full name -->
             </div>
             <div class="col-md-8">
-                <input type="text" id="msg" class="grou-chat-msg-input" placeholder="  I am good">
+                <input type="text" id="msg-input-group-chat" class="grou-chat-msg-input" placeholder="  I am good">
             </div>
             <div class="col-md-2">
-                <button class="group-chat-button">Send</button>
-                <button class="group-chat-button">Refresh</button>
+                <button class="group-chat-button" onclick="sendMessageGroupChat()">Send</button>
+                <button class="group-chat-button" onclick="refeshMessagesGroupChat()">Refresh</button>
             </div>
         </div>
     </div>

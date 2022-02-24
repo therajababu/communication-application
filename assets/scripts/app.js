@@ -2,9 +2,15 @@
 
 let LOGGED_IN_USER = [];
 
-function getCurrentDateTime(){
-    let currDateTime = new Date().toLocaleString();
-    return currDateTime;
+function isEmailValid(email) {
+    let aPos = email.indexOf("@");
+    let dotPos = email.lastIndexOf(".");
+
+    if (aPos < 1 || dotPos - aPos < 2) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function loggedInUser() {
@@ -25,28 +31,81 @@ function pageLoadHandler() {
     }
 }
 
-function loginSuccessfulPageLoadHandler(){
-    pageLoadHandler();
-    // updating username on page
-    document.getElementById("user-email").innerHTML = LOGGED_IN_USER.email;
+
+// Group Chat Page
+
+function prepareMessageToDisplay(msg) {
+    let thisMsg = "[" + msg.timestamp + "] " + msg.fullName + " : " + msg.msg + "<br>";
+    return thisMsg;
 }
 
-function groupChatPageLoadHandler(){
+function readPreviousMessages() {
+    // Getting old messages
+    let getMessagesFromLocalStorage = JSON.parse(localStorage.getItem('msgsLS'));
+    let msgs = getMessagesFromLocalStorage ? getMessagesFromLocalStorage : [];
+    return msgs;
+}
+
+function groupChatPageLoadHandler() {
     pageLoadHandler();
-    // displaying default msg on chat window
-    let msg = "[" +getCurrentDateTime() + "] " + LOGGED_IN_USER.fullName + " : Type your message .....";
-    document.getElementById("group-chat-messages").innerHTML = msg;
+
+    // checking for old messages
+    let msgs = readPreviousMessages();
+    if (msgs.length == 0) {
+        // displaying default chat window
+        document.getElementById("group-chat-messages").innerHTML = "";
+    } else {
+        for (let i = 0; i < msgs.length; i++) {
+            let thisMsg = prepareMessageToDisplay(msgs[i]);
+            document.getElementById("group-chat-messages").innerHTML += thisMsg;
+        }
+    }
+    // displaying current user full name
     document.getElementById("user-full-name").innerHTML = LOGGED_IN_USER.fullName;
 }
 
-function isEmailValid(email) {
-    let aPos = email.indexOf("@");
-    let dotPos = email.lastIndexOf(".");
+function sendMessageGroupChat() {
+    // get previous messages from local storage
+    let messages = readPreviousMessages();
+    // get current message
+    let newMessage = document.getElementById("msg-input-group-chat").value;
+    // checking for blank message
+    if (newMessage.trim() !== "") { // if msg is not blank
+        // appending new msg to previous msg and displaying
+        let msgObj = {
+            id: "M" + Number(new Date()),
+            timestamp: new Date().toLocaleString(),
+            userID: LOGGED_IN_USER.id,
+            fullName: LOGGED_IN_USER.fullName,
+            msg: newMessage.trim()
+        }
 
-    if (aPos < 1 || dotPos - aPos < 2) {
-        return false;
-    } else {
-        return true;
+        document.getElementById("group-chat-messages").innerHTML += prepareMessageToDisplay(msgObj);
+        // removing message from input box
+        document.getElementById("msg-input-group-chat").value = "";
+
+        // saving msgs to local storage
+        messages.push(msgObj);
+        localStorage.setItem('msgsLS', JSON.stringify(messages));
+    }
+}
+
+function refeshMessagesGroupChat() {
+    // deleating and reinitializing the msgs local storage
+    localStorage.removeItem("msgsLS");
+    localStorage.setItem('msgsLS', JSON.stringify([]));
+    document.getElementById("group-chat-messages").innerHTML = "";
+}
+
+
+// Login Page
+
+function loginPageLoadHandler() {
+    loggedInUser();
+
+    if (LOGGED_IN_USER.length !== 0) {
+        // If any user is already logged in
+        location.href = "login-successful.html";
     }
 }
 
@@ -94,6 +153,14 @@ function onLoginSubmitHandler() {
     }
 }
 
+function loginSuccessfulPageLoadHandler() {
+    pageLoadHandler();
+    // updating username on page
+    document.getElementById("user-email").innerHTML = LOGGED_IN_USER.email;
+}
+
+// Registration Page
+
 function validateRegisterFormSubmitHandler() {
     // Getting user data
     let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('usersLS'));
@@ -125,7 +192,7 @@ function validateRegisterFormSubmitHandler() {
         return false;
     } else { // If entered is valid
         userRegisterDetails = {
-            id: Number(new Date()), // Epoch as unique ID
+            id: "U" + Number(new Date()), // Epoch as unique ID
             fullName: fullName,
             email: email,
             password: password
@@ -158,4 +225,13 @@ function validateRegisterFormSubmitHandler() {
             }
         }
     }
+}
+
+// Logout Page
+
+function logoutUser() {
+    localStorage.removeItem("loggedInUserLS");
+    localStorage.setItem('loggedInUserLS', JSON.stringify([]));
+    LOGGED_IN_USER = [];
+    location.href = "logout.html";
 }

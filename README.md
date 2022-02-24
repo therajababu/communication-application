@@ -8,6 +8,8 @@ HTML CSS JavaScript
 
 userLS : id, fullName, email, password
 
+msgsLS : id, timestamp, userID, fullName, msg
+
 docsLS : id, lable, fileName
 
 sharedDocsLS : id, userID, docID
