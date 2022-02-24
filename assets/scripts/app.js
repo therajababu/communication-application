@@ -1,19 +1,28 @@
+let loggedInUsers;
 
-
-function pageLoadHandler(){
+function pageLoadHandler() {
+    console.log(localStorage);
     // checking for all local storage
-    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('usersLS'));
-    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
+    // let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUser'));
+    // let loggedInUsers = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+
+    // if(getLoggedInUsersFromLocalStorage == null){
+    //     // redirect to welcome page
+    //     location.href = 'welcome.html';
+    // } else{
+    //     loggedInUsers = getLoggedInUsersFromLocalStorage.email;
+    // }
+
 }
 
-function isUserLoggedIn(){
+function isUserLoggedIn() {
     alert("Checking!")
 }
 
 function isEmailValid(email) {
     let aPos = email.indexOf("@");
     let dotPos = email.lastIndexOf(".");
-    
+
     if (aPos < 1 || dotPos - aPos < 2) {
         return false;
     } else {
@@ -45,8 +54,8 @@ function onLoginSubmitHandler() {
 
 function validateRegisterFormSubmitHandler() {
     // Getting user data
-    // let getUsersFromLS = JSON.parse(localStorage.getItem('usersLS'));
-    // let users = getUsersFromLS ? getUsersFromLS : [];
+    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('usersLS'));
+    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
 
     let fullName = document.forms["registerForm"]["fullName"].value;
     let email = document.forms["registerForm"]["email"].value;
@@ -55,34 +64,58 @@ function validateRegisterFormSubmitHandler() {
     // console.log(fullName, email, password, confirmPassword);
 
     if (fullName == "") {
-        alert("Please enter your Name!");
+        alert("Enter your Name!");
         return false;
     } else if (email == "") {
-        alert("Please enter your Email!");
+        alert("Enter your Email!");
         return false;
     } else if (password == "") {
-        alert("Please enter your Password!");
+        alert("Enter your Password!");
         return false;
     } else if (confirmPassword == "") {
-        alert("Please enter Confirm Password!");
+        alert("Enter Confirm Password!");
         return false;
     } else if (password !== confirmPassword) {
         alert("Both password should match!");
         return false;
     } else if (!isEmailValid) { // invalid email
-        alert("Please enter valid email id!");
+        alert("Enter valid email id!");
         return false;
-    } else { // If everything is valid
-        // Stroring the user into Local Storage
+    } else { // If entered is valid
         userRegisterDetails = {
-            id: Number(new Date()), // Epoch 
+            id: Number(new Date()), // Epoch as unique ID
             fullName: fullName,
             email: email,
             password: password
         }
-        users.push(userRegisterDetails);
-        localStorage.setItem('usersLS', JSON.stringify(users));
-
-        return true;
+        if (users.length == 0) {
+            // handling first user
+            users.push(userRegisterDetails);
+            localStorage.setItem('usersLS', JSON.stringify(users));
+            // user will be redirected to register successful page
+            return true;
+        } else {
+            // checking for existing record
+            let isUserExist = false;
+            for (let i = 0; i < users.length; i++) {
+                console.log(users[i].email == email);
+                if (users[i].email == email) {
+                    console.log("Email - ", users[i].email);
+                    isUserExist = true;
+                    break; // user is found
+                }
+            }
+            if (isUserExist) {
+                //alert
+                alert("This email/user already exists!");
+                return false;
+            } else {
+                // save user
+                users.push(userRegisterDetails);
+                localStorage.setItem('usersLS', JSON.stringify(users));
+                // user will be redirected to register successful page
+                return true;
+            }
+        }
     }
 }
