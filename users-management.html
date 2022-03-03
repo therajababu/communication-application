@@ -18,7 +18,7 @@
     <script src="./assets/scripts/app.js"></script>
 </head>
 
-<body onload="pageLoadHandler()">
+<body onload="UserManagementPageLoadHandler()">
     <!-- Start: nav bar-->
     <div class="navbar">
         <a href="chat.html">Group Chat</a>
@@ -38,17 +38,8 @@
                         <th> </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Text User</td>
-                        <td class="text-center">textuser@mail.com</td>
-                        <td class="text-center">
-                            <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
+                <tbody id="user-list-table-body">
+                    <!-- <tr>
                         <td>Anne Hunter</td>
                         <td class="text-center">anne.hunter@mail.com</td>
                         <td class="text-center">
@@ -56,26 +47,8 @@
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                                 Delete</button>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Jale Boser</td>
-                        <td class="text-center">Jale@yahoo.com</td>
-                        <td class="text-center">
-                            <a href="edit-users.html"><button type="button" class="btn ">Edit</button></a> |
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                                Delete</button>
-                        </td>
-                    </tr>
-                    <!-- to provide blank rows-->
-                    <script>
-                        for (var i = 0; i < 5; i++) {
-                            document.write("<tr>")
-                            document.write("<td>&nbsp;</td>")
-                            document.write("<td></td>")
-                            document.write("<td></td>")
-                            document.write("</tr>")
-                        }
-                    </script>
+                    </tr> -->
+
                 </tbody>
             </table>
         </div>

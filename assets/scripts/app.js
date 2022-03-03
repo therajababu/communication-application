@@ -2,6 +2,19 @@
 
 let LOGGED_IN_USER = [];
 
+function readFromLocalStorage(key) {
+    // Getting data from local storage
+    let getFromLocalStorage = JSON.parse(localStorage.getItem(key));
+    let data = getFromLocalStorage ? getFromLocalStorage : [];
+    return data; // returning array of object
+}
+
+function saveToLocalStorage(key, value) {
+    // key is string and values is array of objects
+    localStorage.setItem(key, JSON.stringify(value));
+    // returns nothing
+}
+
 function isEmailValid(email) {
     let aPos = email.indexOf("@");
     let dotPos = email.lastIndexOf(".");
@@ -28,6 +41,32 @@ function pageLoadHandler() {
         location.href = 'welcome.html';
     } else {
         // do nothing
+    }
+}
+
+
+// User Management Page
+
+function UserManagementPageLoadHandler() {
+    let users = readFromLocalStorage("usersLS");
+    console.log(users);
+    var tableBody = document.getElementById("user-list-table-body");
+
+    let rowsToInsert;
+
+    for (let i = 0; i < users.length; i++) {
+        rowData = `<tr>
+            <td>${users[i].fullName}</td>
+            <td class="text-center">${users[i].email}</td>
+            <td class="text-center">
+                <a href="edit-users.html"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
+                <button type="button" id="${users[i].id}" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                    Delete</button>
+            </td>
+        </tr>`;
+        console.log(rowsToInsert);
+        var newRow = document.getElementById("user-list-table-body").insertRow();
+        newRow.innerHTML = rowData;
     }
 }
 
@@ -234,4 +273,16 @@ function logoutUser() {
     localStorage.setItem('loggedInUserLS', JSON.stringify([]));
     LOGGED_IN_USER = [];
     location.href = "logout.html";
+}
+
+// Welcome Page
+
+function welcomePageLoadHandler() {
+    // if any user is logged in
+    // then redirect to login successful page
+    // else do nothing - let them login or register
+    let user = readFromLocalStorage("loggedInUserLS");
+    if (user.length !== 0) {
+        location.href = "login-successful.html";
+    }
 }
