@@ -18,7 +18,7 @@
     <script src="./assets/scripts/app.js"></script>
 </head>
 
-<body onload="pageLoadHandler()">
+<body onload="editUserPageLoadHandler()">
     <!-- Start: nav bar-->
     <navbar>
         <div class="navbar">
@@ -33,7 +33,7 @@
     <div class="container form-page-container">
         <h4>Edit User Information</h4>
         <!-- Start: Form-->
-        <form action="users-management.html">
+        <form id="editUserForm" action="users-management.html" onsubmit="return editUserFormSubmitHandler()" required>
             <table class="form-table">
                 <tr>
                     <td class="text-right"><label for="text">Full Name</label></td>

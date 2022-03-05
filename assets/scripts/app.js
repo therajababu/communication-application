@@ -1,6 +1,7 @@
 // Global variable
 
 let LOGGED_IN_USER = [];
+let EDIT_USER_ID = "";
 
 function readFromLocalStorage(key) {
     // Getting data from local storage
@@ -47,7 +48,7 @@ function pageLoadHandler() {
 
 // User Management Page
 
-function UserManagementPageLoadHandler() {
+function userManagementPageLoadHandler() {
     let users = readFromLocalStorage("usersLS");
     console.log(users);
     var tableBody = document.getElementById("user-list-table-body");
@@ -59,7 +60,7 @@ function UserManagementPageLoadHandler() {
             <td>${users[i].fullName}</td>
             <td class="text-center">${users[i].email}</td>
             <td class="text-center">
-                <a href="edit-users.html"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
+                <a href="edit-users.html?editUserID=${users[i].id}"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
                 <button type="button" id="${users[i].id}" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                     Delete</button>
             </td>
@@ -68,6 +69,50 @@ function UserManagementPageLoadHandler() {
         var newRow = document.getElementById("user-list-table-body").insertRow();
         newRow.innerHTML = rowData;
     }
+}
+
+function editUserPageLoadHandler() {
+    let url = document.location.href,
+        params = url.split('?')[1].split('&'),
+        data = {}, tmp;
+    for (let i = 0, l = params.length; i < l; i++) {
+        tmp = params[i].split('=');
+        data[tmp[0]] = tmp[1];
+    }
+
+    let users = readFromLocalStorage("usersLS");
+    let editUserID = data["editUserID"];
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id == editUserID) {
+
+            EDIT_USER_ID = users[i]["id"];
+            // displaying the record
+            document.getElementById("fullName").value = users[i]["fullName"];
+            document.getElementById("email").value = users[i]["email"];
+            break; // user is found
+        }
+    }
+}
+
+function editUserFormSubmitHandler() {
+    // geting users data from local storage
+    let users = readFromLocalStorage("usersLS");
+    // getting updated details
+    let newFullName = document.forms["editUserForm"]["fullName"].value
+    let newEmail = document.forms["editUserForm"]["email"].value
+
+    // updating user data and saving
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id == EDIT_USER_ID) {
+            users[i].fullName = newFullName;
+            users[i].email = newEmail;
+            // console.log("Edit User : ", users[i]);
+            saveToLocalStorage("usersLS", users);
+            return true; // user data is saved and redirecting to user management
+        }
+    }
+    return false; // user not found 
 }
 
 
