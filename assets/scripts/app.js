@@ -2,6 +2,11 @@
 
 let LOGGED_IN_USER = [];
 let EDIT_USER_ID = "";
+let DELETE_USER_ROW_INDEX;
+
+function refreshLoggedInUser() {
+    // refresh
+}
 
 function readFromLocalStorage(key) {
     // Getting data from local storage
@@ -53,20 +58,17 @@ function userManagementPageLoadHandler() {
     console.log(users);
     var tableBody = document.getElementById("user-list-table-body");
 
-    let rowsToInsert;
-
     for (let i = 0; i < users.length; i++) {
         rowData = `<tr>
             <td>${users[i].fullName}</td>
             <td class="text-center">${users[i].email}</td>
             <td class="text-center">
                 <a href="edit-users.html?editUserID=${users[i].id}"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
-                <button type="button" id="${users[i].id}" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                <button type="button" id="${users[i].id}" onclick="return userDeleteBtn(this)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                     Delete</button>
             </td>
         </tr>`;
-        console.log(rowsToInsert);
-        var newRow = document.getElementById("user-list-table-body").insertRow();
+        var newRow = tableBody.insertRow();
         newRow.innerHTML = rowData;
     }
 }
@@ -114,6 +116,26 @@ function editUserFormSubmitHandler() {
     }
     return false; // user not found 
 }
+
+function userDeleteBtn(element) {
+    console.log(element);
+    console.log(element.id);
+
+    DELETE_USER_ROW_INDEX = element.parentNode.parentNode.rowIndex;
+    console.log("Row No : ", DELETE_USER_ROW_INDEX);
+    return false;
+}
+
+function userDeleteOk(element) {
+    console.log(element);
+
+    document.getElementById("user-list-table-body").deleteRow(DELETE_USER_ROW_INDEX - 1);
+    let users = readFromLocalStorage("usersLS");
+    users.splice(DELETE_USER_ROW_INDEX - 1, 1);
+    saveToLocalStorage("usersLS", users);
+
+}
+
 
 
 // Group Chat Page
