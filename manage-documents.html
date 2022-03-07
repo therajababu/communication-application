@@ -18,7 +18,7 @@
 
 </head>
 
-<body onload="pageLoadHandler()">
+<body onload="manageDocumentsPageLoadHandler()">
     <!-- Start: nav bar-->
     <navbar>
         <div class="navbar">
@@ -41,53 +41,8 @@
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Sales Report</td>
-                        <td class="text-center">sales-Sep2014.xls</td>
-                        <td class="text-center">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#editDocumentModal">
-                                Edit
-                            </button> |
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentModal">
-                                Delete
-                            </button> |
-                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Quaterly Summary</td>
-                        <td class="text-center">SummaryQ4-2014.ppt</td>
-                        <td class="text-center">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#editDocumentModal">
-                                Edit
-                            </button> |
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentModal">
-                                Delete
-                            </button> |
-                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Projection 2013-14</td>
-                        <td class="text-center">SalesProfitProjection.xls</td>
-                        <td class="text-center">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#editDocumentModal">
-                                Edit
-                            </button> |
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentModal">
-                                Delete
-                            </button> |
-                            <a href="share.html"><button type="button" class="btn ">Share</button></a>
-                        </td>
-                    </tr>
-
+                <tbody id="my-uploads-list-table-body">
+                    <!-- function call -->
                 </tbody>
             </table>
         </div>
@@ -103,37 +58,14 @@
                         <th class="text-center">Shared By</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Sales Team Attendance Sept 2014</td>
-                        <td class="text-center">Sale-Attend-Sep2014.xls</td>
-                        <td class="text-center">anne.hunter@mail.com</td>
-                    </tr>
-                    <tr>
-                        <td>Office Rules</td>
-                        <td class="text-center">OfficeRule.doc</td>
-                        <td class="text-center">hr@office.com</td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn add-document-button" data-bs-toggle="modal"
-                                data-bs-target="#addDocumentModal">
-                                + Add Upload
-                            </button>
-                        </td>
-                        <td></td>
-                        <td></td>
-
-                    </tr>
-
+                <tbody id="shared-uploads-list-table-body">
+                    <!-- dynamic list -->
                 </tbody>
-
             </table>
+            <button type="button" class="btn add-document-button" data-bs-toggle="modal"
+                data-bs-target="#addDocumentModal">
+                + Add Upload
+            </button>
         </div>
     </div>
 
@@ -151,7 +83,8 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" placeholder=" Sales Report">
+                            <input type="text" class="input-file-modal" id="selectedFileLabel"
+                                placeholder=" Sales Report">
                         </div>
                     </div>
                     <br>
@@ -165,7 +98,8 @@
                     </div>
                 </div>
                 <div class="modal-footer add-document-modal-footer">
-                    <button type="button" class="btn btn-secondary grey-button" data-bs-dismiss="modal">
+                    <button type="button" id="add-upload-save-btn" onclick="addUploadOkClickHandler()"
+                        class="btn btn-secondary grey-button" data-bs-dismiss="modal">
                         Save
                     </button>
                     <button type="button" class="btn btn-secondary grey-button" data-bs-dismiss="modal">
@@ -179,7 +113,8 @@
 
 
     <!-- Start: Edit Document Modal -->
-    <div class="modal fade" id="editDocumentModal" tabindex="-1" aria-labelledby="editDocumentModal" aria-hidden="true">
+    <div class="modal fade" id="editDocumentModal" onload="onLoadEditDocModal()" tabindex="-1"
+        aria-labelledby="editDocumentModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -192,12 +127,14 @@
                             File Description
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="input-file-modal" placeholder=" Sales Report">
+                            <input type="text" id="edit-file-label-modal-input" class="input-file-modal"
+                                placeholder=" Sales Report">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer confirm-modal-footer">
-                    <button type=" button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
+                    <button type=" button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal"
+                        onclick="docEditOkBtn()">
                         Save
                     </button>
                     <button type="button" class="btn btn-secondary modal-button grey-button" data-bs-dismiss="modal">
@@ -226,7 +163,8 @@
                     </p>
                 </div>
                 <div class="modal-footer confirm-modal-footer">
-                    <button type="button " class="btn btn-secondary modal-button" data-bs-dismiss="modal">Ok</button>
+                    <button type="button " class="btn btn-secondary modal-button" data-bs-dismiss="modal"
+                        onclick="docDeleteOkBtn()">Ok</button>
                     <button type="button " class="btn btn-secondary modal-button" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -192,6 +192,7 @@
 }
 
 .add-document-button {
+  margin: 10px;
   border-radius: 10px;
   padding: 3px;
   background-color: aqua;

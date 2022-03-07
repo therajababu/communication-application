@@ -18,7 +18,7 @@
 
 </head>
 
-<body onload="pageLoadHandler()">
+<body onload="sharePageLoadHandler()">
     <!-- Start: nav bar-->
     <navbar>
         <div class="navbar">
@@ -31,7 +31,7 @@
     <!-- End: nav bar-->
 
     <div class="container-fluid share-page-container">
-        <p class="upload-sharing-title"><b>Upload Sharing :</b> Sample.txt </p>
+        <p class="upload-sharing-title"><b>Upload Sharing :</b> <span id="share-page-doc-name">Sample.txfft </span></p>
         <div class="table-container">
             <table class="table  table-bordered table-striped custom-table">
                 <thead>
@@ -40,23 +40,8 @@
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Sales Report</td>
-                        <td class="text-center">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentModal">
-                                Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Text User</td>
-                        <td class="text-center">
-                            <button type="button" class="btn" data-bs-toggle="modal"
-                                data-bs-target="#deleteDocumentModal">
-                                Delete</button>
-                        </td>
-                    </tr>
+                <tbody id="my-shared-doc-list-table-body"> 
+                    <!-- dynamic display -->
                 </tbody>
             </table>
         </div>
@@ -70,13 +55,11 @@
                 </div>
                 <div class="col-sm-5">
                     <select class="text-center manage-documents-dropdown-list" name="selectedUser" id="selectedUser">
-                        <option value="J Bose">J Bose</option>
-                        <option value="HR">HR</option>
-                        <option value="Harsh Zaveri">Harsh Zaveri</option>
+                        <!-- from JS -->
                     </select>
                 </div>
                 <div class="col-sm-5">
-                    <button class="grey-button">Add Share</button>
+                    <button class="grey-button" value="" id="add-share-btn" onclick="addShareBtnClick()">Add Share</button>
                 </div>
             </div>
         </div>
