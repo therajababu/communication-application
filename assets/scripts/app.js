@@ -531,8 +531,7 @@ function loginSuccessfulPageLoadHandler() {
 
 function validateRegisterFormSubmitHandler() {
     // Getting user data
-    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('users'));
-    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
+    let users = readFromLocalStorage("users");
 
     let fullName = document.forms["registerForm"]["fullName"].value;
     let email = document.forms["registerForm"]["email"].value;
@@ -587,7 +586,7 @@ function validateRegisterFormSubmitHandler() {
             } else {
                 // save user
                 users.push(userRegisterDetails);
-                localStorage.setItem('users', JSON.stringify(users));
+                saveToLocalStorage("users", users);
                 // user will be redirected to register successful page
                 return true;
             }
