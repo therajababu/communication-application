@@ -1,21 +1,20 @@
 // Global variable
 
 let LOGGED_IN_USER = [];
+let LOGGED_IN_USER_ID;
 let EDIT_USER_ID = "";
-let DELETE_USER_ROW_INDEX;
-let DELETE_DOC_ROW_INDEX;
+let DELETE_USER_ID;
 let EDIT_DOC_ROW_INDEX;
 let EDIT_DOC_ID;
-
-function refreshLoggedInUser() {
-    // refresh
-}
 
 function getUserById(id) {
     let users = readFromLocalStorage("users");
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == id) {
-            return users[i];
+            let user = users[i];
+            // deleting password
+            delete user.password;
+            return user;
         }
     }
 }
@@ -58,6 +57,7 @@ function loggedInUser() {
     let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUser'));
     // updating gloabl variable
     LOGGED_IN_USER = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+    LOGGED_IN_USER_ID = LOGGED_IN_USER.id;
 }
 
 function pageLoadHandler() {
@@ -253,7 +253,7 @@ function sharePageLoadHandler() {
     var mySharedDocTableBody = document.getElementById("my-shared-doc-list-table-body");
     for (let i = 0; i < sharedDocs.length; i++) {
         console.log(sharedDocs[i].docId, shareDocId)
-        if (sharedDocs[i].docId == shareDocId ) {
+        if (sharedDocs[i].docId == shareDocId) {
             rowData = ` <tr>
                 <td>${getUserById(sharedDocs[i].sharedToId).fullName}</td>
                 <td class="text-center">
@@ -271,11 +271,11 @@ function sharePageLoadHandler() {
 
 }
 
-function deleteSharedDoc(sharedId){
+function deleteSharedDoc(sharedId) {
     let sharedDocs = readFromLocalStorage("sharedDocs");
 
-    for(let i=0 ; i<sharedDocs.length ; i++){
-        if(sharedDocs[i].id == sharedId){
+    for (let i = 0; i < sharedDocs.length; i++) {
+        if (sharedDocs[i].id == sharedId) {
             console.log("Before : ", sharedDocs);
             sharedDocs.splice(i, 1);
             console.log("After : ", sharedDocs);
@@ -296,7 +296,7 @@ function addShareBtnClick() {
 
     let newShareDoc = {
         id: "S" + Number(new Date()),
-        sharedById: LOGGED_IN_USER.id,
+        sharedById: LOGGED_IN_USER_ID,
         sharedToId: shareToUserId,
         docId: shareDocId,
     }
@@ -309,11 +309,14 @@ function addShareBtnClick() {
 // User Management
 
 function userManagementPageLoadHandler() {
+    pageLoadHandler();
+
     // getting all users from local storage
     let users = readFromLocalStorage("users");
     // console.log(users);
     // getting user table
     var tableBody = document.getElementById("user-list-table-body");
+    tableBody.innerHTML = "";
 
     for (let i = 0; i < users.length; i++) {
         rowData = `<tr>
@@ -321,7 +324,7 @@ function userManagementPageLoadHandler() {
             <td class="text-center">${users[i].email}</td>
             <td class="text-center">
                 <a href="edit-users.html?editUserID=${users[i].id}"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
-                <button type="button" id="${users[i].id}" onclick="return userDeleteBtn(this)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
+                <button type="button" id="${users[i].id}" onclick="userDeleteBtn(this)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
                     Delete</button>
             </td>
         </tr>`;
@@ -365,6 +368,19 @@ function editUserFormSubmitHandler() {
     let newFullName = document.forms["editUserForm"]["fullName"].value
     let newEmail = document.forms["editUserForm"]["email"].value
 
+    // checing for blank values
+    if (newFullName.trim() == "") {
+        alert("Name can't be blank!");
+        return false;
+    } else if (newEmail.trim() == "") {
+        alert("Email can't be blank!");
+        return false;
+    } else if (!isEmailValid(newEmail)) {
+        alert("Email is invalid!");
+        return false;
+    }
+    // execution will come here is the form is valid
+
     // updating user data and saving
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == EDIT_USER_ID) {
@@ -381,20 +397,30 @@ function editUserFormSubmitHandler() {
 function userDeleteBtn(element) {
     // console.log(element); // which element cicked the button
     // console.log(element.id); // id to be deleated
-
-    DELETE_USER_ROW_INDEX = element.parentNode.parentNode.rowIndex;
-    // console.log("Row Index : ", DELETE_USER_ROW_INDEX);
-    return false;
+    if(element.id == LOGGED_IN_USER_ID){
+        alert("Can't delete the loggedIn user");
+        location.href = "users-management.html";
+    }
+    DELETE_USER_ID = element.id;
 }
 
-function userDeleteOk(element) {
-    // checking the element who calls
-    // console.log(element);
+function userDeleteOk() {
+    if (DELETE_USER_ID == LOGGED_IN_USER_ID) {
+        alert("Can't delete the loggedIn user");
+    } else {
+        let index = -1; // finding the index of element in user array
+        let users = readFromLocalStorage("users");
+        for(let i = 0; i < users.length; i++) {
+            if(users[i].id == DELETE_USER_ID){
+                index = i;
+            }
+        }
+        users.splice(index, 1); // delete the index element
+        saveToLocalStorage("users", users);
+    }
 
-    document.getElementById("user-list-table-body").deleteRow(DELETE_USER_ROW_INDEX - 1);
-    let users = readFromLocalStorage("users");
-    users.splice(DELETE_USER_ROW_INDEX - 1, 1);
-    saveToLocalStorage("users", users);
+    // refresh page to load the updated users list
+    userManagementPageLoadHandler();
 }
 
 
@@ -406,18 +432,11 @@ function prepareMessageToDisplay(msg) {
     return thisMsg;
 }
 
-function readPreviousMessages() {
-    // Getting old messages
-    let getMessagesFromLocalStorage = JSON.parse(localStorage.getItem('messages'));
-    let msgs = getMessagesFromLocalStorage ? getMessagesFromLocalStorage : [];
-    return msgs;
-}
-
 function groupChatPageLoadHandler() {
     pageLoadHandler();
 
     // checking for old messages
-    let msgs = readPreviousMessages();
+    let msgs = readFromLocalStorage("messages");
 
     document.getElementById("group-chat-messages").innerHTML = "";
     for (let i = 0; i < msgs.length; i++) {
@@ -425,44 +444,40 @@ function groupChatPageLoadHandler() {
         document.getElementById("group-chat-messages").innerHTML += thisMsg;
     }
     // displaying current user full name
-    document.getElementById("user-full-name").innerHTML = LOGGED_IN_USER.fullName;
+    document.getElementById("user-full-name").innerHTML = getUserById(LOGGED_IN_USER_ID).fullName;
 }
 
 function sendMessageGroupChat() {
     // get previous messages from local storage
-    let messages = readPreviousMessages();
+    let messages = readFromLocalStorage("messages");
     // get current message
     let newMessage = document.getElementById("msg-input-group-chat").value;
     // checking for blank message
-    if (newMessage.trim() !== "") { // if msg is not blank
+    if (newMessage.trim() == "") {
+        alert("Message is blank!");
+    } else { // if msg is not blank
         // appending new msg to previous msg and displaying
-        let msgObj = {
+        let newMsgObj = {
             id: "M" + Number(new Date()),
             timestamp: new Date().toLocaleString(),
-            userID: LOGGED_IN_USER.id,
-            fullName: LOGGED_IN_USER.fullName,
+            userID: LOGGED_IN_USER_ID,
+            fullName: getUserById(LOGGED_IN_USER_ID).fullName,
             msg: newMessage.trim()
         }
 
-        document.getElementById("group-chat-messages").innerHTML += prepareMessageToDisplay(msgObj);
+        document.getElementById("group-chat-messages").innerHTML += prepareMessageToDisplay(newMsgObj);
         // removing message from input box
         document.getElementById("msg-input-group-chat").value = "";
 
         // saving msgs to local storage
-        messages.push(msgObj);
-        localStorage.setItem('messages', JSON.stringify(messages));
+        messages.push(newMsgObj);
+        saveToLocalStorage("messages", messages);
     }
 }
 
 function refeshMessagesGroupChat() {
     // just reloading all the msgs
     groupChatPageLoadHandler();
-
-
-    // // deleating and reinitializing the msgs local storage
-    // localStorage.removeItem("messages");
-    // localStorage.setItem('messages', JSON.stringify([]));
-    // document.getElementById("group-chat-messages").innerHTML = "";
 }
 
 
@@ -483,8 +498,7 @@ function onLoginSubmitHandler() {
     loggedInUser();
 
     // Getting user data
-    let getUsersFromLocalStorage = JSON.parse(localStorage.getItem('users'));
-    let users = getUsersFromLocalStorage ? getUsersFromLocalStorage : [];
+    let users = readFromLocalStorage("users");
 
     let email = document.forms["loginForm"]["email"].value;
     let password = document.forms["loginForm"]["password"].value;
@@ -499,7 +513,7 @@ function onLoginSubmitHandler() {
     } else if (password == "") {
         alert("Enter your Password!");
         return false;
-    } else if (!isEmailValid) { // invalid email
+    } else if (!isEmailValid(email)) { // invalid email
         alert("Enter a valid email id!");
         return false;
     } else { // everything is valid
@@ -509,8 +523,12 @@ function onLoginSubmitHandler() {
                 // user is found in database
                 // updating global variable
                 LOGGED_IN_USER = users[i];
+                LOGGED_IN_USER_ID = users[i].id;
+                // deleting the password property from object
+                delete LOGGED_IN_USER.password;
                 // saving to local storage
-                localStorage.setItem('loggedInUser', JSON.stringify(LOGGED_IN_USER));
+                saveToLocalStorage("loggedInUser", LOGGED_IN_USER);
+
                 // allow to be redirected to login successful page
                 return true;
             }
@@ -524,7 +542,7 @@ function onLoginSubmitHandler() {
 function loginSuccessfulPageLoadHandler() {
     pageLoadHandler();
     // updating username on page
-    document.getElementById("user-email").innerHTML = LOGGED_IN_USER.email;
+    document.getElementById("user-email").innerHTML = getUserById(LOGGED_IN_USER_ID).email;
 }
 
 // Registration Page
@@ -554,11 +572,11 @@ function validateRegisterFormSubmitHandler() {
     } else if (password !== confirmPassword) {
         alert("Both password should match!");
         return false;
-    } else if (!isEmailValid) { // invalid email
+    } else if (!isEmailValid(email)) { // invalid email
         alert("Enter valid email id!");
         return false;
-    } else { // If entered is valid
-        userRegisterDetails = {
+    } else { // If form is valid
+        newUserObj = {
             id: "U" + Number(new Date()), // Epoch as unique ID
             fullName: fullName,
             email: email,
@@ -566,8 +584,8 @@ function validateRegisterFormSubmitHandler() {
         }
         if (users.length == 0) {
             // handling first user
-            users.push(userRegisterDetails);
-            localStorage.setItem('users', JSON.stringify(users));
+            users.push(newUserObj);
+            saveToLocalStorage("users", users);
             // user will be redirected to register successful page
             return true;
         } else {
@@ -585,7 +603,7 @@ function validateRegisterFormSubmitHandler() {
                 return false;
             } else {
                 // save user
-                users.push(userRegisterDetails);
+                users.push(newUserObj);
                 saveToLocalStorage("users", users);
                 // user will be redirected to register successful page
                 return true;
