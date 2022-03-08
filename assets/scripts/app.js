@@ -4,8 +4,9 @@ let LOGGED_IN_USER = [];
 let LOGGED_IN_USER_ID;
 let EDIT_USER_ID = "";
 let DELETE_USER_ID;
-let EDIT_DOC_ROW_INDEX;
-let EDIT_DOC_ID;
+let DELETE_UPLOADED_DOC_ID; // stores doc id
+let DELETE_SHARED_DOC_ID; // stores shared id
+let EDIT_UPLOADED_DOC_ID; // edit doc by id
 
 function getUserById(id) {
     let users = readFromLocalStorage("users");
@@ -79,8 +80,9 @@ function manageDocumentsPageLoadHandler() {
     // Display My Uploads section
     let docs = readFromLocalStorage("docs");
     var tableBodyMyUploads = document.getElementById("my-uploads-list-table-body");
+    tableBodyMyUploads.innerHTML = ""; // clear previous data
     for (let i = 0; i < docs.length; i++) {
-        if (docs[i].sharedByID == LOGGED_IN_USER.id) {
+        if (docs[i].addedByUserId == LOGGED_IN_USER_ID) {
             rowData = `<tr>
                     <td>${docs[i].label}</td>
                     <td class="text-center">${docs[i].fileName}</td>
@@ -107,11 +109,11 @@ function manageDocumentsPageLoadHandler() {
     let sharedDocs = readFromLocalStorage("sharedDocs");
     var tableBodySharedUploads = document.getElementById("shared-uploads-list-table-body");
     for (let i = 0; i < sharedDocs.length; i++) {
-        if (sharedDocs[i].sharedToId == LOGGED_IN_USER.id) {
+        if (sharedDocs[i].sharedToUserId == LOGGED_IN_USER_ID) {
             rowData = `<tr>
                 <td>${getDocById(sharedDocs[i].docId).label}</td>
                 <td class="text-center">${getDocById(sharedDocs[i].docId).fileName}</td>
-                <td class="text-center">${getUserById(sharedDocs[i].sharedToId).email}</td>
+                <td class="text-center">${getUserById(sharedDocs[i].sharedByUserId).email}</td>
             </tr>`;
             // inserting row 
             var newRow = tableBodySharedUploads.insertRow();
@@ -143,10 +145,9 @@ function addUploadOkClickHandler() {
 
     fileUploadDetails = {
         id: "D" + Number(new Date()), // Epoch as unique ID
-        sharedByID: LOGGED_IN_USER.id,
+        addedByUserId: LOGGED_IN_USER_ID,
         fileName: fileName,
         label: label,
-        sharedByEmail: LOGGED_IN_USER.email,
     }
     // console.log(fileUploadDetails);
 
@@ -164,29 +165,34 @@ function addUploadOkClickHandler() {
 
 function docDeleteBtn(element) {
     // console.log(element); // which element cicked the button
-    // console.log(element.id); // id to be deleated
-
-    DELETE_DOC_ROW_INDEX = element.parentNode.parentNode.rowIndex;
-    console.log("Row Index : ", DELETE_DOC_ROW_INDEX);
-    // return false;
+    DELETE_UPLOADED_DOC_ID = element.id;
+    console.log(DELETE_UPLOADED_DOC_ID); // doc to be deleated
 }
 
 
-function docDeleteOkBtn(element) {
-    // checking the element who calls
-    // console.log(element);
+function docDeleteOkBtn() {
 
-    document.getElementById("my-uploads-list-table-body").deleteRow(DELETE_DOC_ROW_INDEX - 1);
+    let index = -1; // finding the index of element in user array
     let docs = readFromLocalStorage("docs");
-    docs.splice(DELETE_DOC_ROW_INDEX - 1, 1);
+    for (let i = 0; i < docs.length; i++) {
+        if (docs[i].id == DELETE_UPLOADED_DOC_ID) {
+            index = i;
+        }
+    }
+    docs.splice(index, 1); // delete the index element
     saveToLocalStorage("docs", docs);
+
+    // refresh page to load the updated data
+    manageDocumentsPageLoadHandler()
 }
 
 function docEditBtn(element) {
     console.log(element); // which element cicked the button
-    console.log(element.id); // id to be deleated
+    EDIT_UPLOADED_DOC_ID = element.id;
+    console.log(EDIT_UPLOADED_DOC_ID);
     let docs = readFromLocalStorage("docs");
 
+    // showing existing label of doc
     for (let i = 0; i < docs.length; i++) {
         if (docs[i].id == element.id) {
             // editDoc = docs[i];
@@ -194,21 +200,21 @@ function docEditBtn(element) {
             break;
         }
     }
-    EDIT_DOC_ROW_INDEX = element.parentNode.parentNode.rowIndex;
-    EDIT_DOC_ID = element.id;
-
-    console.log("Row Index : ", EDIT_DOC_ROW_INDEX, ", DOC ID : ", EDIT_DOC_ID);
-    // return false;
 }
 
 function docEditOkBtn(element) {
     let docs = readFromLocalStorage("docs");
 
     for (let i = 0; i < docs.length; i++) {
-        if (docs[i].id == EDIT_DOC_ID) {
+        if (docs[i].id == EDIT_UPLOADED_DOC_ID) {
             let newLabel = document.getElementById("edit-file-label-modal-input").value;
-            docs[i].label = newLabel;
-            break;
+            if (newLabel.trim() == "") {
+                alert('File description is blank!');
+                break;
+            } else {
+                docs[i].label = newLabel;
+                break;
+            }
         }
     }
     saveToLocalStorage("docs", docs);
@@ -217,18 +223,26 @@ function docEditOkBtn(element) {
 
 function sharePageLoadHandler() {
     pageLoadHandler()
-
-    // getting the args from the url
-    let url = document.location.href,
-        params = url.split('?')[1].split('&'),
-        data = {}, tmp;
-    for (let i = 0, l = params.length; i < l; i++) {
-        tmp = params[i].split('=');
-        data[tmp[0]] = tmp[1];
+    
+    let shareDocId;
+    try {
+        // getting the args from the url
+        let url = document.location.href,
+            params = url.split('?')[1].split('&'),
+            data = {}, tmp;
+        for (let i = 0, l = params.length; i < l; i++) {
+            tmp = params[i].split('=');
+            data[tmp[0]] = tmp[1];
+        }
+        // saving id
+        shareDocId = data["shareDocId"];
+    } catch (err) {
+        console.log(err.message);
+        location.href = "manage-documents.html";
     }
 
     // doc id to be shared
-    let shareDocId = data["shareDocId"];
+
     document.getElementById("add-share-btn").value = shareDocId;
     console.log("Doc Shared Id: ", shareDocId);
 
@@ -237,7 +251,7 @@ function sharePageLoadHandler() {
     let selectionOption = document.getElementById("selectedUser");
 
     for (let i = 0; i < users.length; i++) {
-        if (users[i].id == LOGGED_IN_USER) {
+        if (users[i].id == LOGGED_IN_USER_ID) {
             continue;
         } else {
             let toInsert = `<option value="${users[i].id}">${users[i].fullName}</option>`;
@@ -255,10 +269,10 @@ function sharePageLoadHandler() {
         console.log(sharedDocs[i].docId, shareDocId)
         if (sharedDocs[i].docId == shareDocId) {
             rowData = ` <tr>
-                <td>${getUserById(sharedDocs[i].sharedToId).fullName}</td>
+                <td>${getUserById(sharedDocs[i].sharedToUserId).fullName}</td>
                 <td class="text-center">
                     <button type="button" class="btn" data-bs-toggle="modal"
-                        data-bs-target="#deleteDocumentModal" onclick="deleteSharedDoc(${sharedDocs[i].id})">
+                        data-bs-target="#deleteDocumentModal" id="${sharedDocs[i].id}" onclick="deleteSharedDocBtn(this)">
                         Delete</button>
                 </td>
             </tr>`;
@@ -268,22 +282,29 @@ function sharePageLoadHandler() {
             newRow.innerHTML = rowData;
         }
     }
-
 }
 
-function deleteSharedDoc(sharedId) {
-    let sharedDocs = readFromLocalStorage("sharedDocs");
+function deleteSharedDocBtn(element) {
+    DELETE_SHARED_DOC_ID = element.id;
+    console.log("Delete Share ID : ", DELETE_SHARED_DOC_ID);
+}
 
+function deleteSharedDocOkBtn(){
+    let index = -1; // finding the index of element in user array
+    let tmpDocId;
+    let sharedDocs = readFromLocalStorage("sharedDocs");
     for (let i = 0; i < sharedDocs.length; i++) {
-        if (sharedDocs[i].id == sharedId) {
-            console.log("Before : ", sharedDocs);
-            sharedDocs.splice(i, 1);
-            console.log("After : ", sharedDocs);
-            break;
+        if (sharedDocs[i].id == DELETE_SHARED_DOC_ID) {
+            index = i;
+            tmpDocId = sharedDocs[i].docId;
         }
     }
+    sharedDocs.splice(index, 1); // delete the index element
     saveToLocalStorage("sharedDocs", sharedDocs);
-    location.href = "share.html";
+
+    // refresh page to load the updated data
+    location.href = `share.html?shareDocId=${tmpDocId}`;
+
 }
 
 function addShareBtnClick() {
@@ -291,19 +312,29 @@ function addShareBtnClick() {
     let shareDocId = document.getElementById("add-share-btn").value;
     console.log("User Selected: " + shareToUserId + ", DOC ID : ", shareDocId);
 
-    // add to ls
     let sharedDocs = readFromLocalStorage("sharedDocs");
 
-    let newShareDoc = {
-        id: "S" + Number(new Date()),
-        sharedById: LOGGED_IN_USER_ID,
-        sharedToId: shareToUserId,
-        docId: shareDocId,
+    // checking wether this doc is already shared with this particluar user
+    let isThisDocSharedWithThisUser = false;
+    for (let i = 0; i < sharedDocs.length; i++) {
+        if (sharedDocs[i].docId == shareDocId && sharedDocs[i].sharedToUserId == shareToUserId) {
+            isThisDocSharedWithThisUser = true;
+        }
     }
 
-    sharedDocs.push(newShareDoc);
-    saveToLocalStorage("sharedDocs", sharedDocs);
-    location.href = "share.html";
+    if (isThisDocSharedWithThisUser == false) {
+        let newShareDoc = {
+            id: "S" + Number(new Date()), // share id
+            sharedByUserId: LOGGED_IN_USER_ID,
+            sharedToUserId: shareToUserId,
+            docId: shareDocId,
+        }
+        sharedDocs.push(newShareDoc);
+        saveToLocalStorage("sharedDocs", sharedDocs);
+        location.href = `share.html?shareDocId=${shareDocId}`;
+    } else{
+        alert("This doc is already shared with this user.");
+    }
 }
 
 // User Management
@@ -316,7 +347,7 @@ function userManagementPageLoadHandler() {
     // console.log(users);
     // getting user table
     var tableBody = document.getElementById("user-list-table-body");
-    tableBody.innerHTML = "";
+    tableBody.innerHTML = ""; // clear previous data
 
     for (let i = 0; i < users.length; i++) {
         rowData = `<tr>
@@ -324,8 +355,16 @@ function userManagementPageLoadHandler() {
             <td class="text-center">${users[i].email}</td>
             <td class="text-center">
                 <a href="edit-users.html?editUserID=${users[i].id}"><button type="button" id="${users[i].id}" class="btn ">Edit</button></a> |
-                <button type="button" id="${users[i].id}" onclick="userDeleteBtn(this)" class="btn" data-bs-toggle="modal" data-bs-target="#deleteUserModal">
-                    Delete</button>
+                <button 
+                    type="button" 
+                    id="${users[i].id}" 
+                    onclick="userDeleteBtn(this)" 
+                    class="btn" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#deleteUserModal"
+                    >
+                        Delete
+                </button>
             </td>
         </tr>`;
         // inserting row 
@@ -397,7 +436,7 @@ function editUserFormSubmitHandler() {
 function userDeleteBtn(element) {
     // console.log(element); // which element cicked the button
     // console.log(element.id); // id to be deleated
-    if(element.id == LOGGED_IN_USER_ID){
+    if (element.id == LOGGED_IN_USER_ID) {
         alert("Can't delete the loggedIn user");
         location.href = "users-management.html";
     }
@@ -410,8 +449,8 @@ function userDeleteOk() {
     } else {
         let index = -1; // finding the index of element in user array
         let users = readFromLocalStorage("users");
-        for(let i = 0; i < users.length; i++) {
-            if(users[i].id == DELETE_USER_ID){
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].id == DELETE_USER_ID) {
                 index = i;
             }
         }
@@ -424,11 +463,11 @@ function userDeleteOk() {
 }
 
 
-
 // Group Chat Page
 
 function prepareMessageToDisplay(msg) {
-    let thisMsg = "[" + msg.timestamp + "] " + msg.fullName + " : " + msg.msg + "<br>";
+    // let thisMsg = "[" + msg.timestamp + "] " + msg.fullName + " : " + msg.msg + "<br>";
+    let thisMsg = "[" + msg.timestamp + "] " + getUserById(msg.senderId).fullName + " : " + msg.msg + "<br>";
     return thisMsg;
 }
 
@@ -460,8 +499,7 @@ function sendMessageGroupChat() {
         let newMsgObj = {
             id: "M" + Number(new Date()),
             timestamp: new Date().toLocaleString(),
-            userID: LOGGED_IN_USER_ID,
-            fullName: getUserById(LOGGED_IN_USER_ID).fullName,
+            senderId: LOGGED_IN_USER_ID,
             msg: newMessage.trim()
         }
 
