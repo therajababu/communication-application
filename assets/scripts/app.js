@@ -174,6 +174,9 @@ function docDeleteOkBtn() {
 
     let index = -1; // finding the index of element in user array
     let docs = readFromLocalStorage("docs");
+    let sharedDocs = readFromLocalStorage("sharedDocs");
+
+    // deleting from doc table
     for (let i = 0; i < docs.length; i++) {
         if (docs[i].id == DELETE_UPLOADED_DOC_ID) {
             index = i;
@@ -181,6 +184,16 @@ function docDeleteOkBtn() {
     }
     docs.splice(index, 1); // delete the index element
     saveToLocalStorage("docs", docs);
+
+    // deleteing from shared doc table
+    // for (let i = 0; i < sharedDocs.length; i++) {
+    //     if (sharedDocs[i].docId == DELETE_UPLOADED_DOC_ID) {
+    //         index = i;
+    //     }
+    // }
+    // sharedDocs.splice(index, 1); // delete the index element
+    // saveToLocalStorage("sharedDocs", sharedDocs);
+
 
     // refresh page to load the updated data
     manageDocumentsPageLoadHandler()
@@ -223,8 +236,11 @@ function docEditOkBtn(element) {
 
 function sharePageLoadHandler() {
     pageLoadHandler()
-    
-    let shareDocId;
+    let users = readFromLocalStorage("users");
+    let sharedDocs = readFromLocalStorage("sharedDocs");
+    let docs = readFromLocalStorage("docs");
+
+    let shareDocId = 0;
     try {
         // getting the args from the url
         let url = document.location.href,
@@ -234,8 +250,19 @@ function sharePageLoadHandler() {
             tmp = params[i].split('=');
             data[tmp[0]] = tmp[1];
         }
-        // saving id
-        shareDocId = data["shareDocId"];
+
+        // checking for valid doc id
+        for (let i = 0; i < docs.length; i++) {
+            if (docs[i].id == data["shareDocId"]) {
+                shareDocId = data["shareDocId"];
+            }
+        }
+
+        if (shareDocId == 0) {
+            alert("Invalid Doc ID!");
+            location.href = "manage-documents.html";
+        }
+
     } catch (err) {
         console.log(err.message);
         location.href = "manage-documents.html";
@@ -246,24 +273,8 @@ function sharePageLoadHandler() {
     document.getElementById("add-share-btn").value = shareDocId;
     console.log("Doc Shared Id: ", shareDocId);
 
-    // displaying all users
-    let users = readFromLocalStorage("users");
-    let selectionOption = document.getElementById("selectedUser");
-
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].id == LOGGED_IN_USER_ID) {
-            continue;
-        } else {
-            let toInsert = `<option value="${users[i].id}">${users[i].fullName}</option>`;
-            selectionOption.innerHTML += toInsert;
-        }
-    }
-
-    // doc name on top of page
-    document.getElementById("share-page-doc-name").innerHTML = getDocById(shareDocId).fileName;
-
     // upload sharing list - shared by me display
-    let sharedDocs = readFromLocalStorage("sharedDocs");
+
     var mySharedDocTableBody = document.getElementById("my-shared-doc-list-table-body");
     for (let i = 0; i < sharedDocs.length; i++) {
         console.log(sharedDocs[i].docId, shareDocId)
@@ -282,6 +293,22 @@ function sharePageLoadHandler() {
             newRow.innerHTML = rowData;
         }
     }
+
+    // displaying all users
+
+    let selectionOption = document.getElementById("selectedUser");
+
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].id == LOGGED_IN_USER_ID) {
+            continue;
+        } else {
+            let toInsert = `<option value="${users[i].id}">${users[i].fullName}</option>`;
+            selectionOption.innerHTML += toInsert;
+        }
+    }
+
+    // doc name on top of page
+    document.getElementById("share-page-doc-name").innerHTML = getDocById(shareDocId).fileName;
 }
 
 function deleteSharedDocBtn(element) {
@@ -289,7 +316,7 @@ function deleteSharedDocBtn(element) {
     console.log("Delete Share ID : ", DELETE_SHARED_DOC_ID);
 }
 
-function deleteSharedDocOkBtn(){
+function deleteSharedDocOkBtn() {
     let index = -1; // finding the index of element in user array
     let tmpDocId;
     let sharedDocs = readFromLocalStorage("sharedDocs");
@@ -332,7 +359,7 @@ function addShareBtnClick() {
         sharedDocs.push(newShareDoc);
         saveToLocalStorage("sharedDocs", sharedDocs);
         location.href = `share.html?shareDocId=${shareDocId}`;
-    } else{
+    } else {
         alert("This doc is already shared with this user.");
     }
 }
@@ -362,6 +389,7 @@ function userManagementPageLoadHandler() {
                     class="btn" 
                     data-bs-toggle="modal" 
                     data-bs-target="#deleteUserModal"
+                    ${users[i].id == LOGGED_IN_USER_ID ? "disabled" : ""}
                     >
                         Delete
                 </button>
