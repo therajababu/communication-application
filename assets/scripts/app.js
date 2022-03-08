@@ -164,36 +164,20 @@ function addUploadOkClickHandler() {
 
 
 function docDeleteBtn(element) {
-    // console.log(element); // which element cicked the button
+    // console.log(element);
     DELETE_UPLOADED_DOC_ID = element.id;
     console.log(DELETE_UPLOADED_DOC_ID); // doc to be deleated
 }
 
-
 function docDeleteOkBtn() {
-
-    let index = -1; // finding the index of element in user array
     let docs = readFromLocalStorage("docs");
-    let sharedDocs = readFromLocalStorage("sharedDocs");
-
-    // deleting from doc table
-    for (let i = 0; i < docs.length; i++) {
-        if (docs[i].id == DELETE_UPLOADED_DOC_ID) {
-            index = i;
-        }
-    }
-    docs.splice(index, 1); // delete the index element
+    docs = docs.filter(i => i.id !== DELETE_UPLOADED_DOC_ID);
     saveToLocalStorage("docs", docs);
 
-    // deleteing from shared doc table
-    // for (let i = 0; i < sharedDocs.length; i++) {
-    //     if (sharedDocs[i].docId == DELETE_UPLOADED_DOC_ID) {
-    //         index = i;
-    //     }
-    // }
-    // sharedDocs.splice(index, 1); // delete the index element
-    // saveToLocalStorage("sharedDocs", sharedDocs);
-
+    // remove the doc from share doc list
+    let sharedDocs = readFromLocalStorage("sharedDocs");
+    sharedDocs = sharedDocs.filter(i => i.docId !== DELETE_UPLOADED_DOC_ID);
+    saveToLocalStorage("sharedDocs", sharedDocs);
 
     // refresh page to load the updated data
     manageDocumentsPageLoadHandler()
@@ -462,8 +446,7 @@ function editUserFormSubmitHandler() {
 }
 
 function userDeleteBtn(element) {
-    // console.log(element); // which element cicked the button
-    // console.log(element.id); // id to be deleated
+    // To add extra validation before deleting the user
     if (element.id == LOGGED_IN_USER_ID) {
         alert("Can't delete the loggedIn user");
         location.href = "users-management.html";
@@ -472,22 +455,31 @@ function userDeleteBtn(element) {
 }
 
 function userDeleteOk() {
-    if (DELETE_USER_ID == LOGGED_IN_USER_ID) {
-        alert("Can't delete the loggedIn user");
-    } else {
-        let index = -1; // finding the index of element in user array
+    // only if global variable has valid values
+    if (DELETE_USER_ID !== undefined || DELETE_USER_ID !== null) {
+        // delete the user
         let users = readFromLocalStorage("users");
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].id == DELETE_USER_ID) {
-                index = i;
-            }
-        }
-        users.splice(index, 1); // delete the index element
+        users = users.filter(i => i.id !== DELETE_USER_ID);
         saveToLocalStorage("users", users);
-    }
 
-    // refresh page to load the updated users list
-    userManagementPageLoadHandler();
+        // refresh page to load the updated users list
+        userManagementPageLoadHandler();
+
+        // delete messages associated with this user
+        let messages = readFromLocalStorage("messages");
+        messages = messages.filter(msg => msg.senderId !== DELETE_USER_ID);
+        saveToLocalStorage("messages", messages);
+
+        // delete docs associated with this user
+        let docs = readFromLocalStorage("docs");
+        docs = docs.filter(doc => doc.addedByUserId !== DELETE_USER_ID);
+        saveToLocalStorage("docs", docs);
+
+        // delete all shared docs associated with this user
+        let sharedDocs = readFromLocalStorage("sharedDocs");
+        sharedDocs = sharedDocs.filter(i => i.sharedByUserId !== DELETE_USER_ID);
+        saveToLocalStorage("sharedDocs", sharedDocs);
+    }
 }
 
 
