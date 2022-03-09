@@ -6,14 +6,12 @@ HTML CSS JavaScript
 
 ### Local Storage Schema
 
-userLS : id, fullName, email, password
+users   : id, fullName, email, password
 
-msgsLS : id, timestamp, userID, fullName, msg
+msgs    : id, timestamp, senderId, msg
 
-docsLS : id, lable, fileName
+docs    : id, lable, fileName, addedByUserId
 
-sharedDocsLS : id, userID, docID
+sharedDocs  : id, docId, sharedByUserId, sharedToUserId
 
-chatLS : id, message
-
-loggedInUserLS :
+loggedInUser    : id
