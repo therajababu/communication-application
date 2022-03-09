@@ -1,15 +1,16 @@
 // Global variable
 
-let LOGGED_IN_USER = [];
-let LOGGED_IN_USER_ID;
-let EDIT_USER_ID = "";
-let DELETE_USER_ID;
-let DELETE_UPLOADED_DOC_ID; // stores doc id
-let DELETE_SHARED_DOC_ID; // stores shared id
-let EDIT_UPLOADED_DOC_ID; // edit doc by id
+let LOGGED_IN_USER = []; // to store user details
+let LOGGED_IN_USER_ID = "";  // to store user id 
+let EDIT_USER_ID = ""; // for editing user profile
+let DELETE_USER_ID; // to delete user
+let DELETE_UPLOADED_DOC_ID; // to delete uploaded doc by id
+let DELETE_SHARED_DOC_ID; // to store shared doc id
+let EDIT_UPLOADED_DOC_ID; // to edit doc by id
 
 function getUserById(id) {
     let users = readFromLocalStorage("users");
+
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == id) {
             let user = users[i];
@@ -54,16 +55,13 @@ function isEmailValid(email) {
 }
 
 function loggedInUser() {
-    // checking the local storage
-    let getLoggedInUsersFromLocalStorage = JSON.parse(localStorage.getItem('loggedInUser'));
-    // updating gloabl variable
-    LOGGED_IN_USER = getLoggedInUsersFromLocalStorage ? getLoggedInUsersFromLocalStorage : [];
+    // checking the local storage and updating global variable
+    LOGGED_IN_USER = readFromLocalStorage("loggedInUser");
     LOGGED_IN_USER_ID = LOGGED_IN_USER.id;
 }
 
 function pageLoadHandler() {
     loggedInUser();
-
     if (LOGGED_IN_USER.length == 0) { // no user is stored
         // redirect to welcome page
         location.href = 'welcome.html';
@@ -134,6 +132,7 @@ function addUploadOkClickHandler() {
     let label = document.getElementById("selectedFileLabel").value;
     fileName = fileName.replace('C:\\fakepath\\', ''); // To clean up the C:\fakepath\
 
+    // validation
     if (fileName.trim() == "") {
         alert("File is missing.");
         return;
@@ -143,6 +142,7 @@ function addUploadOkClickHandler() {
         return;
     }
 
+    // new file object
     fileUploadDetails = {
         id: "D" + Number(new Date()), // Epoch as unique ID
         addedByUserId: LOGGED_IN_USER_ID,
@@ -184,9 +184,9 @@ function docDeleteOkBtn() {
 }
 
 function docEditBtn(element) {
-    console.log(element); // which element cicked the button
+    // console.log(element); // 
     EDIT_UPLOADED_DOC_ID = element.id;
-    console.log(EDIT_UPLOADED_DOC_ID);
+    // console.log(EDIT_UPLOADED_DOC_ID);
     let docs = readFromLocalStorage("docs");
 
     // showing existing label of doc
@@ -253,12 +253,10 @@ function sharePageLoadHandler() {
     }
 
     // doc id to be shared
-
     document.getElementById("add-share-btn").value = shareDocId;
     console.log("Doc Shared Id: ", shareDocId);
 
     // upload sharing list - shared by me display
-
     var mySharedDocTableBody = document.getElementById("my-shared-doc-list-table-body");
     for (let i = 0; i < sharedDocs.length; i++) {
         console.log(sharedDocs[i].docId, shareDocId)
@@ -279,9 +277,7 @@ function sharePageLoadHandler() {
     }
 
     // displaying all users
-
     let selectionOption = document.getElementById("selectedUser");
-
     for (let i = 0; i < users.length; i++) {
         if (users[i].id == LOGGED_IN_USER_ID) {
             continue;
@@ -315,7 +311,6 @@ function deleteSharedDocOkBtn() {
 
     // refresh page to load the updated data
     location.href = `share.html?shareDocId=${tmpDocId}`;
-
 }
 
 function addShareBtnClick() {
@@ -482,7 +477,6 @@ function userDeleteOk() {
     }
 }
 
-
 // Group Chat Page
 
 function prepareMessageToDisplay(msg) {
@@ -543,7 +537,6 @@ function refeshMessagesGroupChat() {
 
 function loginPageLoadHandler() {
     loggedInUser();
-
     if (LOGGED_IN_USER.length !== 0) {
         // If any user is already logged in
         location.href = "login-successful.html";
